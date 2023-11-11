@@ -4,9 +4,9 @@ export const UsersDecorator = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     return {
-        username: request.user.username,
-        createdAt: request.user.createdAt,
-        id: request.user.id,
+      username: request.user.username,
+      createdAt: request.user.createdAt,
+      id: request.user.id,
     };
   },
 );

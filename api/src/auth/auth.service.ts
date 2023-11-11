@@ -20,15 +20,13 @@ export class AuthService {
       return {
         username,
         createdAt,
-        id
+        id,
       };
     }
     return null;
   }
 
-  async login(
-    user: Omit<User, 'password'>,
-  ): Promise<{ accessToken: string }> {
+  async login(user: Omit<User, 'password'>): Promise<{ accessToken: string }> {
     return {
       accessToken: this.jwtService.sign(user),
     };

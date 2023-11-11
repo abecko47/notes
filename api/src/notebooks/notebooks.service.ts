@@ -1,9 +1,9 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateNotebookDto } from './dto/create-notebook.dto';
 import { UpdateNotebookDto } from './dto/update-notebook.dto';
-import {PrismaService} from "../prisma/prisma.service";
-import {UserDto} from "../users/dto/User.dto";
-import {throwIfUserIsNotOwner} from "../util/process.env";
+import { PrismaService } from '../prisma/prisma.service';
+import { UserDto } from '../users/dto/User.dto';
+import { throwIfUserIsNotOwner } from '../util/process.env';
 
 @Injectable()
 export class NotebooksService {
@@ -13,8 +13,8 @@ export class NotebooksService {
   private async throwIfViolation(notebookId: string, user: UserDto) {
     const notebooks = await this.prisma.notebook.findMany({
       where: {
-        id: notebookId
-      }
+        id: notebookId,
+      },
     });
 
     if (notebooks.length === 0) {
@@ -30,15 +30,15 @@ export class NotebooksService {
         userId: user.id,
         name: createNotebookDto.name,
       },
-    })
+    });
   }
 
   findAll(user: UserDto) {
     return this.prisma.notebook.findMany({
       where: {
         user,
-      }
-    })
+      },
+    });
   }
 
   findOne(id: string, user: UserDto) {
@@ -46,19 +46,23 @@ export class NotebooksService {
       where: {
         id,
         user,
-      }
-    })
+      },
+    });
   }
 
-  async update(id: string, updateNotebookDto: UpdateNotebookDto, user: UserDto) {
+  async update(
+    id: string,
+    updateNotebookDto: UpdateNotebookDto,
+    user: UserDto,
+  ) {
     await this.throwIfViolation(id, user);
 
     return this.prisma.notebook.update({
       where: {
         id,
-        user
+        user,
       },
-      data: updateNotebookDto
+      data: updateNotebookDto,
     });
   }
 
@@ -68,7 +72,7 @@ export class NotebooksService {
     return this.prisma.notebook.delete({
       where: {
         id,
-        user
+        user,
       },
     });
   }

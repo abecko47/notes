@@ -1,10 +1,10 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
-import {PrismaService} from "../prisma/prisma.service";
-import {UserDto} from "../users/dto/User.dto";
-import {UsersService} from "../users/users.service";
-import {throwIfUserIsNotOwner} from "../util/process.env";
+import { PrismaService } from '../prisma/prisma.service';
+import { UserDto } from '../users/dto/User.dto';
+import { UsersService } from '../users/users.service';
+import { throwIfUserIsNotOwner } from '../util/process.env';
 
 @Injectable()
 export class NotesService {
@@ -14,8 +14,8 @@ export class NotesService {
   private async throwIfViolation(noteId: string, user: UserDto) {
     const notes = await this.prisma.note.findMany({
       where: {
-        id: noteId
-      }
+        id: noteId,
+      },
     });
 
     if (notes.length === 0) {
@@ -32,15 +32,15 @@ export class NotesService {
         name: createNoteDto.name,
         notebookId: createNoteDto.notebookId,
         content: createNoteDto.content,
-      }
-    })
+      },
+    });
   }
 
   findAll(user: UserDto) {
     return this.prisma.note.findMany({
       where: {
         user,
-      }
+      },
     });
   }
 
@@ -49,8 +49,8 @@ export class NotesService {
       where: {
         id,
         user,
-      }
-    })
+      },
+    });
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
@@ -59,9 +59,9 @@ export class NotesService {
     return this.prisma.note.update({
       where: {
         id,
-        user
+        user,
       },
-      data: updateNoteDto
+      data: updateNoteDto,
     });
   }
 
@@ -71,7 +71,7 @@ export class NotesService {
     return this.prisma.note.delete({
       where: {
         id,
-        user
+        user,
       },
     });
   }
