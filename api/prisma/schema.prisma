@@ -2,30 +2,71 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   extensions = [uuidOssp(map: "uuid-ossp")]
 }
 
 model User {
-  id String @db.Uuid @unique @default(dbgenerated("uuid_generate_v4()"))
-  createdAt DateTime @default(now())
-  username String @unique
-  password String
-  notes Note[]
+  id        String     @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime   @default(now())
+  username  String     @unique
+  password  String
+  notes     Note[]
+  notebooks Notebook[]
+  tags      Tag[]
 }
 
 model Note {
-  id String @db.Uuid @unique @default(dbgenerated("uuid_generate_v4()"))
-  name String
-  content String?
-  user User @relation(fields: [userId], references: [id])
-  userId String @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime?
+  id           String         @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name         String
+  content      String?
+  user         User           @relation(fields: [userId], references: [id])
+  notebook     Notebook?      @relation(fields: [notebookId], references: [id])
+  userId       String         @db.Uuid
+  notebookId   String?        @db.Uuid
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime?
+  notesAndTags NotesAndTags[]
+}
+
+model Notebook {
+  id               String             @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name             String
+  user             User               @relation(fields: [userId], references: [id])
+  userId           String             @db.Uuid
+  notes            Note[]
+  notebooksAndTags NotebooksAndTags[]
+}
+
+model Tag {
+  id               String             @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name             String
+  user             User               @relation(fields: [userId], references: [id])
+  userId           String             @db.Uuid
+  notesAndTags     NotesAndTags[]
+  notebooksAndTags NotebooksAndTags[]
+}
+
+model NotesAndTags {
+  note   Note   @relation(fields: [noteId], references: [id])
+  noteId String @db.Uuid
+  tag    Tag    @relation(fields: [tagId], references: [id])
+  tagId  String @db.Uuid
+
+  @@id([noteId, tagId])
+}
+
+model NotebooksAndTags {
+  notebook   Notebook @relation(fields: [notebookId], references: [id])
+  notebookId String   @db.Uuid
+  tag        Tag      @relation(fields: [tagId], references: [id])
+  tagId      String   @db.Uuid
+
+  @@id([notebookId, tagId])
 }
