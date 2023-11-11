@@ -13,7 +13,6 @@ import { JwtStrategy } from './jwt.strategy';
   providers: [
     AuthService,
     LocalStrategy,
-    JwtService,
     JwtStrategy,
     PrismaService,
     UsersService,
@@ -22,9 +21,10 @@ import { JwtStrategy } from './jwt.strategy';
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secretOrPrivateKey: jwtConstants.secret,
       signOptions: { expiresIn: '1000h' },
     }),
   ],
+  exports: [AuthService],
 })
 export class AuthModule {}
