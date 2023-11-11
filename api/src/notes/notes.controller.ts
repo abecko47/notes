@@ -12,8 +12,8 @@ export class NotesController {
 
   @ApiBearerAuth()
   @Post()
-  create(@Body() createNoteDto: CreateNoteDto) {
-    return this.notesService.create(createNoteDto);
+  create(@Body() createNoteDto: CreateNoteDto, @UsersDecorator() user: UserDto) {
+    return this.notesService.create(createNoteDto, user);
   }
 
   @ApiBearerAuth()
@@ -30,12 +30,13 @@ export class NotesController {
 
   @ApiBearerAuth()
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
-    return this.notesService.update(id, updateNoteDto);
+  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto, @UsersDecorator() user: UserDto) {
+    return this.notesService.update(id, updateNoteDto, user);
   }
 
+  @ApiBearerAuth()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.notesService.remove(id);
+  remove(@Param('id') id: string, @UsersDecorator() user: UserDto) {
+    return this.notesService.remove(id, user);
   }
 }

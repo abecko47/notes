@@ -1,51 +1,48 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import { CreateNoteDto } from './dto/create-note.dto';
-import { UpdateNoteDto } from './dto/update-note.dto';
+import { CreateNotebookDto } from './dto/create-notebook.dto';
+import { UpdateNotebookDto } from './dto/update-notebook.dto';
 import {PrismaService} from "../prisma/prisma.service";
 import {UserDto} from "../users/dto/User.dto";
-import {UsersService} from "../users/users.service";
 import {throwIfUserIsNotOwner} from "../util/process.env";
 
 @Injectable()
-export class NotesService {
+export class NotebooksService {
   constructor(private prisma: PrismaService) {}
 
   // Using this to throw 400, instead of 500. One user cannot update records of another one.
-  private async throwIfViolation(noteId: string, user: UserDto) {
-    const notes = await this.prisma.note.findMany({
+  private async throwIfViolation(notebookId: string, user: UserDto) {
+    const notebooks = await this.prisma.notebook.findMany({
       where: {
-        id: noteId
+        id: notebookId
       }
     });
 
-    if (notes.length === 0) {
+    if (notebooks.length === 0) {
       throw new BadRequestException();
     }
 
-    throwIfUserIsNotOwner(notes[0].userId, user.id);
+    throwIfUserIsNotOwner(notebooks[0].userId, user.id);
   }
 
-  create(createNoteDto: CreateNoteDto, user: UserDto) {
-    return this.prisma.note.create({
+  create(createNotebookDto: CreateNotebookDto, user: UserDto) {
+    return this.prisma.notebook.create({
       data: {
         userId: user.id,
-        name: createNoteDto.name,
-        notebookId: createNoteDto.notebookId,
-        content: createNoteDto.content,
-      }
+        name: createNotebookDto.name,
+      },
     })
   }
 
   findAll(user: UserDto) {
-    return this.prisma.note.findMany({
+    return this.prisma.notebook.findMany({
       where: {
         user,
       }
-    });
+    })
   }
 
   findOne(id: string, user: UserDto) {
-    return this.prisma.note.findFirst({
+    return this.prisma.notebook.findFirst({
       where: {
         id,
         user,
@@ -53,22 +50,22 @@ export class NotesService {
     })
   }
 
-  async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
+  async update(id: string, updateNotebookDto: UpdateNotebookDto, user: UserDto) {
     await this.throwIfViolation(id, user);
 
-    return this.prisma.note.update({
+    return this.prisma.notebook.update({
       where: {
         id,
         user
       },
-      data: updateNoteDto
+      data: updateNotebookDto
     });
   }
 
   async remove(id: string, user: UserDto) {
     await this.throwIfViolation(id, user);
 
-    return this.prisma.note.delete({
+    return this.prisma.notebook.delete({
       where: {
         id,
         user

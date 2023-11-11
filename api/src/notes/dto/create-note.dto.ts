@@ -7,9 +7,6 @@ export class CreateNoteDto {
     @ApiProperty()
     content: string | null
 
-    @ApiHideProperty()
-    userId: string
-
     @ApiProperty()
     notebookId: string | null
 }

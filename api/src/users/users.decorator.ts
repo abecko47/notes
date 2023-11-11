@@ -6,6 +6,7 @@ export const UsersDecorator = createParamDecorator(
     return {
         username: request.user.username,
         createdAt: request.user.createdAt,
+        id: request.user.id,
     };
   },
 );

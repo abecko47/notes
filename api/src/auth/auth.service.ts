@@ -16,8 +16,12 @@ export class AuthService {
   ): Promise<Omit<User, 'password'> | null> {
     const user = await this.usersService.findOne(username);
     if (user && user.password === password) {
-      const { ...result } = user;
-      return result;
+      const { username, createdAt, id } = user;
+      return {
+        username,
+        createdAt,
+        id
+      };
     }
     return null;
   }
