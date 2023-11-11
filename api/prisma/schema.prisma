@@ -31,7 +31,7 @@ model Note {
   userId       String         @db.Uuid
   notebookId   String?        @db.Uuid
   createdAt    DateTime       @default(now())
-  updatedAt    DateTime?
+  updatedAt    DateTime?      @updatedAt
   notesAndTags NotesAndTags[]
 }
 

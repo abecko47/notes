@@ -22,7 +22,8 @@ export class AppController {
   @Post('auth/login')
   @UseGuards(LocalAuthGuard)
   async login(
-    @UsersDecorator() @Body() user: LoginUserDto,
+    @Body() loginUserDto: LoginUserDto,
+    @UsersDecorator() user: UserDto
   ): Promise<{ accessToken: string }> {
     return this.authService.login(user);
   }

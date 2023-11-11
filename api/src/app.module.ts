@@ -8,9 +8,10 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from './prisma/prisma.service';
 import {JwtAuthGuard} from "./auth/jwt-auth.guard";
 import {APP_GUARD} from "@nestjs/core";
+import { NotesModule } from './notes/notes.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, AuthModule],
+  imports: [PrismaModule, UsersModule, AuthModule, NotesModule],
   controllers: [AppController],
   providers: [UsersService, JwtService, PrismaService, {
     provide: APP_GUARD,
