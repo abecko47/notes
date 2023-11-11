@@ -1,25 +1,34 @@
-import {Controller, Get, Post, UseGuards, Request, Body} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Body,
+} from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
-import {JwtAuthGuard} from "./auth/jwt-auth.guard";
-import {User} from "@prisma/client";
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { LoginUserDto } from './auth/dto/LoginUser.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { UsersDecorator } from './users/users.decorator';
+import { UserDto } from './users/dto/User.dto';
 
 @Controller()
 export class AppController {
-  constructor(
-    private authService: AuthService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @Post('auth/login')
-  async login(@Body() user: User, @Request() req): Promise<{ accessToken: string }> {
-    return this.authService.login(req.user);
+  @UseGuards(LocalAuthGuard)
+  async login(
+    @UsersDecorator() @Body() user: LoginUserDto,
+  ): Promise<{ accessToken: string }> {
+    return this.authService.login(user);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('home')
-  getProfile(@Request() req) {
-    return req.user;
+  @ApiBearerAuth()
+  @Get('profile')
+  getProfile(@UsersDecorator() user: UserDto) {
+    return user;
   }
-
 }

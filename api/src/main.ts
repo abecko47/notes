@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('3IPK Notes')
     .setDescription('3IPK Notes API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
