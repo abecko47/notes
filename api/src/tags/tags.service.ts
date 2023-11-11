@@ -11,7 +11,8 @@ export class TagsService {
   constructor(private prisma: PrismaService) {}
 
   // Using this to throw 400, instead of 500. One user cannot update records of another one.
-  private async throwIfViolation(tagId: string, user: UserDto) {
+  public async getTagSafe(tagId: string, user: UserDto) {
+    // findMany() as it doesn't throw error if not found
     const tags = await this.prisma.tag.findMany({
       where: {
         id: tagId,
@@ -23,6 +24,8 @@ export class TagsService {
     }
 
     throwIfUserIsNotOwner(tags[0].userId, user.id);
+
+    return tags[0];
   }
 
   create(createTagDto: CreateTagDto, user: UserDto) {
@@ -52,25 +55,19 @@ export class TagsService {
   }
 
   async update(id: string, updateTagDto: UpdateTagDto, user: UserDto) {
-    await this.throwIfViolation(id, user);
+    const tag = await this.getTagSafe(id, user);
 
     return this.prisma.tag.update({
-      where: {
-        id,
-        user,
-      },
+      where: tag,
       data: updateTagDto,
     });
   }
 
   async remove(id: string, user: UserDto) {
-    await this.throwIfViolation(id, user);
+    const tag = await this.getTagSafe(id, user);
 
     return this.prisma.tag.delete({
-      where: {
-        id,
-        user,
-      },
+      where: tag,
     });
   }
 }

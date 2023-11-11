@@ -10,7 +10,8 @@ export class NotebooksService {
   constructor(private prisma: PrismaService) {}
 
   // Using this to throw 400, instead of 500. One user cannot update records of another one.
-  private async throwIfViolation(notebookId: string, user: UserDto) {
+  public async getNotebookSafe(notebookId: string, user: UserDto) {
+    // findMany() as it doesn't throw error if not found
     const notebooks = await this.prisma.notebook.findMany({
       where: {
         id: notebookId,
@@ -22,6 +23,8 @@ export class NotebooksService {
     }
 
     throwIfUserIsNotOwner(notebooks[0].userId, user.id);
+
+    return notebooks[0];
   }
 
   create(createNotebookDto: CreateNotebookDto, user: UserDto) {
@@ -55,25 +58,19 @@ export class NotebooksService {
     updateNotebookDto: UpdateNotebookDto,
     user: UserDto,
   ) {
-    await this.throwIfViolation(id, user);
+    const notebook = await this.getNotebookSafe(id, user);
 
     return this.prisma.notebook.update({
-      where: {
-        id,
-        user,
-      },
+      where: notebook,
       data: updateNotebookDto,
     });
   }
 
   async remove(id: string, user: UserDto) {
-    await this.throwIfViolation(id, user);
+    const notebook = await this.getNotebookSafe(id, user);
 
     return this.prisma.notebook.delete({
-      where: {
-        id,
-        user,
-      },
+      where: notebook,
     });
   }
 }

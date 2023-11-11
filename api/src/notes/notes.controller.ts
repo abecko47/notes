@@ -13,6 +13,7 @@ import { UpdateNoteDto } from './dto/update-note.dto';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import { UsersDecorator } from '../users/users.decorator';
 import { UserDto } from '../users/dto/User.dto';
+import {AssignNoteToNotebookDto} from "./dto/assign-note-to-notebook.dto";
 
 @ApiTags('notes')
 @Controller('notes')
@@ -54,5 +55,11 @@ export class NotesController {
   @Delete(':id')
   remove(@Param('id') id: string, @UsersDecorator() user: UserDto) {
     return this.notesService.remove(id, user);
+  }
+
+  @ApiBearerAuth()
+  @Post('assign/notebook/:id')
+  assignToNotebook(@Param('id') id: string, @Body() assignNoteToNotebookDto: AssignNoteToNotebookDto, @UsersDecorator() user: UserDto) {
+    return this.notesService.assignToNotebook(id, assignNoteToNotebookDto, user);
   }
 }

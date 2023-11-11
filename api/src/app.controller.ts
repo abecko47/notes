@@ -9,7 +9,7 @@ import { UserDto } from './users/dto/User.dto';
 import { Public } from './public.decorator';
 
 @ApiTags('main')
-@Controller('main')
+@Controller()
 export class AppController {
   constructor(private authService: AuthService) {}
 
