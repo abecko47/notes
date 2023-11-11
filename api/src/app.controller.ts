@@ -3,12 +3,13 @@ import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LoginUserDto } from './auth/dto/LoginUser.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import { UsersDecorator } from './users/users.decorator';
 import { UserDto } from './users/dto/User.dto';
 import { Public } from './public.decorator';
 
-@Controller()
+@ApiTags('main')
+@Controller('main')
 export class AppController {
   constructor(private authService: AuthService) {}
 

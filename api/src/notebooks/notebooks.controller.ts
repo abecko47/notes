@@ -12,8 +12,9 @@ import { CreateNotebookDto } from './dto/create-notebook.dto';
 import { UpdateNotebookDto } from './dto/update-notebook.dto';
 import { UsersDecorator } from '../users/users.decorator';
 import { UserDto } from '../users/dto/User.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 
+@ApiTags('notebooks')
 @Controller('notebooks')
 export class NotebooksController {
   constructor(private readonly notebooksService: NotebooksService) {}
