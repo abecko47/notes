@@ -49,13 +49,19 @@ export class NotesService {
     });
   }
 
-  findOne(id: string, user: UserDto) {
-    return this.prisma.note.findFirst({
+  async findOne(id: string, user: UserDto) {
+    const note = this.prisma.note.findFirst({
       where: {
         id,
         user,
       },
     });
+
+    return {
+      ...(await note),
+      notebook: await note.notebook(),
+      tags: await note.notesAndTags(),
+    }
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {

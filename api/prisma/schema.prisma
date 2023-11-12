@@ -51,6 +51,8 @@ model Tag {
   userId           String             @db.Uuid
   notesAndTags     NotesAndTags[]
   notebooksAndTags NotebooksAndTags[]
+
+  @@unique([name, userId])
 }
 
 model NotesAndTags {

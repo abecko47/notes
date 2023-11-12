@@ -5,6 +5,8 @@ import { UpdateTagDto } from './dto/update-tag.dto';
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {UsersDecorator} from "../users/users.decorator";
 import {UserDto} from "../users/dto/User.dto";
+import {AssignTagToNotebookDto} from "./dto/assign-tag-to-notebook.dto";
+import {AssignTagToNoteDto} from "./dto/assign-tag-to-note.dto";
 
 @ApiTags('tags')
 @Controller('tags')
@@ -39,5 +41,17 @@ export class TagsController {
   @Delete(':id')
   remove(@Param('id') id: string, @UsersDecorator() user: UserDto,) {
     return this.tagsService.remove(id, user);
+  }
+
+  @ApiBearerAuth()
+  @Post('assign/notebook/:name')
+  assignToNotebook(@Param('name') name: string, @Body() assignTagToNotebookDto: AssignTagToNotebookDto, @UsersDecorator() user: UserDto,) {
+    return this.tagsService.assignToNotebook(name, assignTagToNotebookDto, user);
+  }
+
+  @ApiBearerAuth()
+  @Post('assign/notebook/:name')
+  assignToNote(@Param('name') name: string, @Body() assignTagToNoteDto: AssignTagToNoteDto, @UsersDecorator() user: UserDto,) {
+    return this.tagsService.assignToNote(name, assignTagToNoteDto, user);
   }
 }
