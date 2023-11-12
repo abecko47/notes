@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {useApi} from "../../ctx/api/context";
-import {NoteDto} from "../../const/dto/Note.dto";
+import React, { useEffect, useState } from "react";
+import { useApi } from "../../ctx/api/context";
+import { NoteDto } from "../../const/dto/Note.dto";
 import NotesList from "../components/NotesList";
 
 export default function NotesHomepageList() {
-    const api = useApi();
-    const [notes, setNotes] = useState<NoteDto[]>([]);
+  const api = useApi();
+  const [notes, setNotes] = useState<NoteDto[]>([]);
 
-    useEffect(() => {
-        const run = async () => {
-            setNotes(await api.getNotes());
-        }
+  useEffect(() => {
+    const run = async () => {
+      setNotes(await api.getNotes());
+    };
 
-        run();
-    }, [api]);
+    run();
+  }, [api]);
 
-    return <NotesList notes={notes} />
+  return <NotesList notes={notes} />;
 }

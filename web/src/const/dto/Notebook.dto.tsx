@@ -1,3 +1,3 @@
 export type NotebookDto = {
-    name: string;
-}
+  name: string;
+};

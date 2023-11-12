@@ -1,7 +1,7 @@
-import {NoteDto} from "./Note.dto";
-import {NotebookDto} from "./Notebook.dto";
+import { NoteDto } from "./Note.dto";
+import { NotebookDto } from "./Notebook.dto";
 
 export type SearchResultDto = {
-    notes: NoteDto[];
-    notebooks: NotebookDto[];
-}
+  notes: NoteDto[];
+  notebooks: NotebookDto[];
+};

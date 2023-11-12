@@ -1,58 +1,65 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NotesHomepageList from "./NotesHomepageList";
 import NotebooksHomepageList from "./NotebooksHomepageList";
-import {CircularProgress, TextField} from "@mui/material";
-import {useSearch} from "../../ctx/search/context";
-import {SearchResultDto} from "../../const/dto/SearchResult.dto";
-import {Simulate} from "react-dom/test-utils";
+import { CircularProgress, TextField } from "@mui/material";
+import { useSearch } from "../../ctx/search/context";
+import { SearchResultDto } from "../../const/dto/SearchResult.dto";
+import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
 
 export default function Home() {
-    const search = useSearch();
-    const [query, setQuery] = useState("");
-    const [loadingSearch, setLoadingSearch] = useState(false);
-    const [searchResult, setSearchResult] = useState<SearchResultDto>({
-        notes: [],
-        notebooks: [],
-    });
+  const search = useSearch();
+  const [query, setQuery] = useState("");
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [searchResult, setSearchResult] = useState<SearchResultDto>({
+    notes: [],
+    notebooks: [],
+  });
 
-    const handleSearch = async () => {
-        setLoadingSearch(true);
-        setSearchResult(await search.query({
-            query,
-        }));
-        setLoadingSearch(false);
+  const handleSearch = async () => {
+    setLoadingSearch(true);
+    setSearchResult(
+      await search.query({
+        query,
+      }),
+    );
+    setLoadingSearch(false);
+  };
+
+  useEffect(() => {
+    if (query !== "") {
+      handleSearch();
     }
+  }, [handleSearch, query]);
 
-    useEffect(() => {
-        if (query !== "") {
-            handleSearch();
-        }
-    }, [handleSearch, query]);
+  return (
+    <>
+      <TextField
+        id="search"
+        label="Outlined"
+        variant="outlined"
+        onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+          setQuery(e.target.value);
+        }}
+      />
 
-    return <>
-        <TextField
-            id="search"
-            label="Outlined"
-            variant="outlined"
-            onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}}
-        />
+      {query === "" && (
+        <>
+          <NotesHomepageList />
+          <NotebooksHomepageList />
+        </>
+      )}
 
-        { query === "" && (
-            <>
-                <NotesHomepageList/>
-                <NotebooksHomepageList/>
-            </>
-        ) }
-
-        { query !== "" && loadingSearch ? (<CircularProgress />) : (
-            <>
-                <NotesList notes={searchResult.notes} />
-                <NotebooksList notebooks={searchResult.notebooks} />
-            </>
-            )
-        }
+      {query !== "" && loadingSearch ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <NotesList notes={searchResult.notes} />
+          <NotebooksList notebooks={searchResult.notebooks} />
+        </>
+      )}
     </>
+  );
 }

@@ -1,3 +1,3 @@
 export type LoginResultDto = {
-    accessToken: string;
-}
+  accessToken: string;
+};

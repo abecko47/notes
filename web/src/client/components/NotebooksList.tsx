@@ -1,11 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {NoteDto} from "../../const/dto/Note.dto";
-import {NotebookDto} from "../../const/dto/Notebook.dto";
+import React, { useEffect, useState } from "react";
+import { NoteDto } from "../../const/dto/Note.dto";
+import { NotebookDto } from "../../const/dto/Notebook.dto";
 
 export type NotebooksListArgs = {
-    notebooks: NotebookDto[];
-}
+  notebooks: NotebookDto[];
+};
 
-export default function NotebooksList({notebooks}: NotebooksListArgs) {
-    return <>{notebooks.map(notebook => (<div>{notebook.name}</div>))}</>
+export default function NotebooksList({ notebooks }: NotebooksListArgs) {
+  return (
+    <>
+      {notebooks.map((notebook) => (
+        <div>{notebook.name}</div>
+      ))}
+    </>
+  );
 }

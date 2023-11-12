@@ -33,21 +33,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint-fix": "eslint --fix --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "prettier": "npx prettier --write --ext .ts,.tsx ."
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "rules": {
-      "react-hooks/exhaustive-deps": [
-        "warn",
-        {
-          "enableDangerousAutofixThisMayCauseInfiniteLoops": true
-        }
-      ]
-    }
+    ]
   },
   "browserslist": {
     "production": [
@@ -60,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "3.0.3"
   }
 }
