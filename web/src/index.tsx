@@ -6,11 +6,13 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import LoginPage from "./client/scenes/LoginPage";
+import {AuthContextProvider} from "./ctx/auth/context";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div>Landing</div>,
+        element: <LoginPage />,
     },
 ]);
 
@@ -19,7 +21,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthContextProvider>
+        <RouterProvider router={router} />
+      </AuthContextProvider>
   </React.StrictMode>
 );
 
