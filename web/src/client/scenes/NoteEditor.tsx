@@ -4,6 +4,11 @@ import { Button, CircularProgress, TextField } from "@mui/material";
 import { Textarea } from "@mui/joy";
 import { useNoteEditor } from "../../ctx/note-editor/context";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import AssignNotebook from "../components/AssignNotebook";
+import {
+  makeEmptyNotebook,
+  makeEmptyNotebookForAssign,
+} from "../../const/dto/AddRemoveNotebook.dto";
 
 export default function NoteEditor() {
   const { getNote, noteId, upsertNote } = useNoteEditor();
@@ -31,6 +36,14 @@ export default function NoteEditor() {
 
   return (
     <>
+      <h1>Add or update your note</h1>
+      {currentNote.id !== "" && (
+        <AssignNotebook
+          noteId={currentNote.id}
+          defaultNotebook={currentNote.notebook ?? makeEmptyNotebook()}
+        />
+      )}
+
       <Formik
         initialValues={{ ...currentNote }}
         enableReinitialize
@@ -44,12 +57,13 @@ export default function NoteEditor() {
         }}
         onSubmit={async (values, { setSubmitting }) => {
           const note = await upsertNote({
-              ...values
+            ...values,
+            notebookId: currentNote.notebookId ?? undefined,
           });
 
           if (note) {
-              setCurrentNote(note);
-              alert("Success.")
+            setCurrentNote(note);
+            alert("Success.");
           }
 
           setSubmitting(false);

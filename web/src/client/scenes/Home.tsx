@@ -57,14 +57,17 @@ export default function Home() {
       ) : (
         <>
           {query !== "" && (
-              <>
-                <h2>Notebooks</h2>
-                <NotebooksList onDelete={(notebookId) => {
+            <>
+              <h2>Notebooks</h2>
+              <NotebooksList
+                onDelete={(notebookId) => {
                   handleSearch();
-                }} notebooks={searchResult.notebooks} />
-                <h2>Notes</h2>
-                <NotesList notes={searchResult.notes} />
-              </>
+                }}
+                notebooks={searchResult.notebooks}
+              />
+              <h2>Notes</h2>
+              <NotesList notes={searchResult.notes} />
+            </>
           )}
         </>
       )}

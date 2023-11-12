@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {useParams} from "react-router-dom";
-import {useApi} from "../api/context";
-import {makeEmptyNote, NoteDto} from "../../const/dto/Note.dto";
-import {UpsertNoteDto} from "../../const/dto/UpsertNote.dto";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useApi } from "../api/context";
+import { makeEmptyNote, NoteDto } from "../../const/dto/Note.dto";
+import { UpsertNoteDto } from "../../const/dto/UpsertNote.dto";
 
 export type Context = {
   getNote: () => Promise<NoteDto>;
@@ -38,7 +38,7 @@ export const NoteEditorContextProvider = ({ children }: React.PropsWithChildren<
     }
 
     return result;
-  }
+  };
 
   const value: Context = {
     getNote,

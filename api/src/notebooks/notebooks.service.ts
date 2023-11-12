@@ -44,13 +44,19 @@ export class NotebooksService {
     });
   }
 
-  findOne(id: string, user: UserDto) {
-    return this.prisma.notebook.findFirst({
+  async findOne(id: string, user: UserDto) {
+    const notebook =  this.prisma.notebook.findFirst({
       where: {
         id,
         user,
       },
     });
+
+    return {
+      ...(await notebook),
+      notes: await notebook.notes(),
+      tags: await notebook.notebooksAndTags(),
+    }
   }
 
   async update(
@@ -66,9 +72,14 @@ export class NotebooksService {
     });
   }
 
-  // TODO: unassign note from notebook before deletion
   async remove(id: string, user: UserDto) {
     const notebook = await this.getNotebookSafe(id, user);
+
+    await this.prisma.notebooksAndTags.deleteMany({
+      where: {
+        notebook
+      }
+    })
 
     return this.prisma.notebook.delete({
       where: notebook,

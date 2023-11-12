@@ -80,8 +80,7 @@ export class NotesService {
         user,
       },
       data: {
-        name: updateNoteDto.name,
-        content: updateNoteDto.content
+        ...updateNoteDto
       },
     });
   }

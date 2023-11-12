@@ -7,4 +7,7 @@ export class UpdateNoteDto extends PartialType(CreateNoteDto) {
 
   @ApiProperty()
   content: string | null;
+
+  @ApiProperty()
+  notebookId: string | null;
 }

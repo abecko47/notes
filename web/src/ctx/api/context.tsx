@@ -2,12 +2,12 @@ import React from "react";
 import { useAuth } from "../auth/context";
 import axios from "axios";
 import { API_URL } from "../../const/config";
-import {makeEmptyNote, NoteDto} from "../../const/dto/Note.dto";
+import { makeEmptyNote, NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
-import {UpsertNoteDto} from "../../const/dto/UpsertNote.dto";
-import {AddRemoveNotebookDto} from "../../const/dto/AddRemoveNotebook.dto";
+import { UpsertNoteDto } from "../../const/dto/UpsertNote.dto";
+import { AddRemoveNotebookDto } from "../../const/dto/AddRemoveNotebook.dto";
 
 export type Context = {
   getNotes: () => Promise<NoteDto[]>;
@@ -65,15 +65,19 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
 
   const upsertNote = async (upsertNoteDto: UpsertNoteDto): Promise<NoteDto | null> => {
     if (upsertNoteDto.id !== "") {
-      const result = await axios.patch(`${API_URL}notes/${upsertNoteDto.id}`, {
-        ...upsertNoteDto
-      }, {
-        headers: {
-          Accept: "application/json",
-          Authorization: authorization,
+      const result = await axios.patch(
+        `${API_URL}notes/${upsertNoteDto.id}`,
+        {
+          ...upsertNoteDto,
         },
-        validateStatus: () => true,
-      });
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: authorization,
+          },
+          validateStatus: () => true,
+        },
+      );
 
       if (result.status === 401) {
         signOut();
@@ -88,16 +92,19 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
       return result.data;
     }
 
-
-    const result = await axios.post(`${API_URL}notes/${upsertNoteDto.id}`, {
-      ...upsertNoteDto
-    }, {
-      headers: {
-        Accept: "application/json",
-        Authorization: authorization,
+    const result = await axios.post(
+      `${API_URL}notes/${upsertNoteDto.id}`,
+      {
+        ...upsertNoteDto,
       },
-      validateStatus: () => true,
-    });
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: authorization,
+        },
+        validateStatus: () => true,
+      },
+    );
 
     if (result.status === 401) {
       signOut();
@@ -129,19 +136,21 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     return result.data;
   };
 
-  const addNotebook = async (addRemoveNotebookDto: AddRemoveNotebookDto): Promise<NotebookDto | null> => {
+  const addNotebook = async (
+    addRemoveNotebookDto: AddRemoveNotebookDto,
+  ): Promise<NotebookDto | null> => {
     const result = await axios.post(
-        `${API_URL}notebooks/`,
-        {
-          ...addRemoveNotebookDto,
+      `${API_URL}notebooks/`,
+      {
+        ...addRemoveNotebookDto,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: authorization,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: authorization,
-          },
-          validateStatus: () => true,
-        },
+        validateStatus: () => true,
+      },
     );
 
     if (result.status === 401) {
@@ -152,21 +161,20 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     return result.data;
   };
 
-  const removeNotebook = async (addRemoveNotebookDto: AddRemoveNotebookDto): Promise<NotebookDto | null> => {
+  const removeNotebook = async (
+    addRemoveNotebookDto: AddRemoveNotebookDto,
+  ): Promise<NotebookDto | null> => {
     if (addRemoveNotebookDto.id === undefined) {
       return null;
     }
 
-    const result = await axios.delete(
-        `${API_URL}notebooks/${addRemoveNotebookDto.id}`,
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: authorization,
-          },
-          validateStatus: () => true,
-        },
-    );
+    const result = await axios.delete(`${API_URL}notebooks/${addRemoveNotebookDto.id}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: authorization,
+      },
+      validateStatus: () => true,
+    });
 
     if (result.status === 401) {
       signOut();
