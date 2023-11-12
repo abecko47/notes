@@ -2,16 +2,18 @@ import React from "react";
 import { useAuth } from "../auth/context";
 import axios from "axios";
 import { API_URL } from "../../const/config";
-import { NoteDto } from "../../const/dto/Note.dto";
+import {makeEmptyNote, NoteDto} from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
+import {UpsertNoteDto} from "../../const/dto/UpsertNote.dto";
 
 export type Context = {
   getNotes: () => Promise<NoteDto[]>;
   getNoteById: (id: string) => Promise<NoteDto | null>;
   getNotebooks: () => Promise<NotebookDto[]>;
   search: (searchQuery: SearchQueryDto) => Promise<SearchResultDto>;
+  upsertNote: (noteDto: UpsertNoteDto) => Promise<NoteDto | null>;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -37,7 +39,7 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
   };
 
   const getNoteById = async (id: string): Promise<NoteDto | null> => {
-    const result = await axios.get(`${API_URL}note/${id}`, {
+    const result = await axios.get(`${API_URL}notes/${id}`, {
       headers: {
         Accept: "application/json",
         Authorization: authorization,
@@ -52,6 +54,55 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
 
     if (result.status === 401) {
       signOut();
+      return null;
+    }
+
+    return result.data;
+  };
+
+  const upsertNote = async (upsertNoteDto: UpsertNoteDto): Promise<NoteDto | null> => {
+    if (upsertNoteDto.id !== "") {
+      const result = await axios.patch(`${API_URL}notes/${upsertNoteDto.id}`, {
+        ...upsertNoteDto
+      }, {
+        headers: {
+          Accept: "application/json",
+          Authorization: authorization,
+        },
+        validateStatus: () => true,
+      });
+
+      if (result.status === 401) {
+        signOut();
+        return null;
+      }
+
+      if (result.status > 201) {
+        alert("Some error happened.");
+        return null;
+      }
+
+      return result.data;
+    }
+
+
+    const result = await axios.post(`${API_URL}notes/${upsertNoteDto.id}`, {
+      ...upsertNoteDto
+    }, {
+      headers: {
+        Accept: "application/json",
+        Authorization: authorization,
+      },
+      validateStatus: () => true,
+    });
+
+    if (result.status === 401) {
+      signOut();
+      return null;
+    }
+
+    if (result.status > 201) {
+      alert("Some error happened.");
       return null;
     }
 
@@ -106,6 +157,7 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     getNotebooks,
     search,
     getNoteById,
+    upsertNote,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;

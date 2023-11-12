@@ -6,7 +6,7 @@ import { useNoteEditor } from "../../ctx/note-editor/context";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
 export default function NoteEditor() {
-  const { getNote, noteId } = useNoteEditor();
+  const { getNote, noteId, upsertNote } = useNoteEditor();
 
   const [currentNote, setCurrentNote] = useState<NoteDto>(makeEmptyNote());
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +33,7 @@ export default function NoteEditor() {
     <>
       <Formik
         initialValues={{ ...currentNote }}
+        enableReinitialize
         validate={(values) => {
           if (!values.name) {
             return {
@@ -41,8 +42,17 @@ export default function NoteEditor() {
           }
           return {};
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log({ values });
+        onSubmit={async (values, { setSubmitting }) => {
+          const note = await upsertNote({
+              ...values
+          });
+
+          if (note) {
+              setCurrentNote(note);
+              alert("Success.")
+          }
+
+          setSubmitting(false);
         }}
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -50,6 +60,7 @@ export default function NoteEditor() {
             <TextField
               type="name"
               name="name"
+              disabled={isSubmitting}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.name}
@@ -57,6 +68,7 @@ export default function NoteEditor() {
             {errors.name}
             <Textarea
               name="content"
+              disabled={isSubmitting}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.content ?? ""}

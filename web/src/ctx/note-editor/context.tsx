@@ -1,14 +1,13 @@
-import { LoginUserDto } from "../../const/dto/LoginUser.dto";
-import { LoginResultDto } from "../../const/dto/LoginResult.dto";
-import React from "react";
-import { ACCESS_TOKEN } from "../../const/config";
-import { useParams } from "react-router-dom";
-import { useApi } from "../api/context";
-import { makeEmptyNote, NoteDto } from "../../const/dto/Note.dto";
+import React, {useState} from "react";
+import {useParams} from "react-router-dom";
+import {useApi} from "../api/context";
+import {makeEmptyNote, NoteDto} from "../../const/dto/Note.dto";
+import {UpsertNoteDto} from "../../const/dto/UpsertNote.dto";
 
 export type Context = {
   getNote: () => Promise<NoteDto>;
   noteId: string | undefined;
+  upsertNote: (upsertNoteDto: UpsertNoteDto) => Promise<NoteDto | null>;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -17,12 +16,14 @@ export const NoteEditorContextProvider = ({ children }: React.PropsWithChildren<
   const { noteId } = useParams();
   const api = useApi();
 
+  const [currentNoteId, setCurrentNoteId] = useState(noteId);
+
   const getNote = async (): Promise<NoteDto> => {
-    if (noteId === undefined) {
+    if (currentNoteId === undefined) {
       return makeEmptyNote();
     }
 
-    const result = await api.getNoteById(noteId);
+    const result = await api.getNoteById(currentNoteId);
     if (result === null) {
       return makeEmptyNote();
     }
@@ -30,9 +31,19 @@ export const NoteEditorContextProvider = ({ children }: React.PropsWithChildren<
     return result;
   };
 
+  const upsertNote = async (upsertNoteDto: UpsertNoteDto): Promise<NoteDto | null> => {
+    const result = await api.upsertNote(upsertNoteDto);
+    if (result !== null) {
+      setCurrentNoteId(noteId);
+    }
+
+    return result;
+  }
+
   const value: Context = {
     getNote,
-    noteId,
+    noteId: currentNoteId,
+    upsertNote,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;
