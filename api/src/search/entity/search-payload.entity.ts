@@ -1,6 +1,6 @@
-import {Note, Notebook} from "@prisma/client";
+import { Note, Notebook } from '@prisma/client';
 
 export class SearchPayload {
-    notes: Note[]
-    notebooks: Notebook[]
+  notes: Note[];
+  notebooks: Notebook[];
 }
