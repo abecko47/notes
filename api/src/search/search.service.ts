@@ -6,18 +6,12 @@ import {SearchQueryDto} from "./dto/search-query.dto";
 import {UserDto} from "../users/dto/User.dto";
 import {queryToTsQueryWithAnd, queryToTsQueryWithOr} from "./util/searchUtil";
 import {Note, Notebook} from "@prisma/client";
-
-export type SearchPayload = {
-    notes: Note[],
-    notebooks: Notebook[],
-}
+import {SearchPayload} from "./entity/search-payload.entity";
 
 @Injectable()
 export class SearchService {
     constructor(
         private prisma: PrismaService,
-        private notebooks: NotebooksService,
-        private notes: NotesService,
     ) {}
 
     private findNotes(tsQuery: string, userDto: UserDto) {

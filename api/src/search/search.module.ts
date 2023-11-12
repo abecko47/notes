@@ -7,6 +7,6 @@ import {NotebooksService} from "../notebooks/notebooks.service";
 
 @Module({
   controllers: [SearchController],
-  providers: [SearchService, PrismaService, NotesService, NotebooksService],
+  providers: [SearchService, PrismaService],
 })
 export class SearchModule {}
