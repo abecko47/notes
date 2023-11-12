@@ -1,37 +1,44 @@
 import React from "react";
 
 import axios from "axios";
-import {API_URL} from "../../const/config";
+import {ACCESS_TOKEN, API_URL} from "../../const/config";
 import {LoginUserDto} from "../../const/dto/login-user.dto";
 import {LoginResultDto} from "../../const/dto/login-result.dto";
 
 export type Context = {
     login: (loginUserDto: LoginUserDto) => Promise<LoginResultDto | null>;
+    accessToken: string | null;
+    isSignedIn: boolean;
 };
 
 const context = React.createContext<Context | null>(null);
 
 export const AuthContextProvider = ({children}: React.PropsWithChildren<unknown>) => {
     const login = async (loginUserDto: LoginUserDto) => {
-        const {data, status} = await axios.post<LoginResultDto>(
-            `${API_URL}auth/login`,
-            {
-                headers: {
-                    Accept: 'application/json',
-                },
-                ...loginUserDto,
-            }
-        );
+        try {
+            const {data, status} = await axios.post<LoginResultDto>(
+                `${API_URL}auth/login`,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                    ...loginUserDto,
+                }
 
-        if (status === 201) {
+            );
+
+            window.localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+
             return data;
+        } catch (e) {
+            return null;
         }
-
-        return null;
     }
 
     const value: Context = {
         login,
+        accessToken: window.localStorage.getItem(ACCESS_TOKEN),
+        isSignedIn: window.localStorage.getItem(ACCESS_TOKEN) !== null,
     };
 
     return <context.Provider value={value}>{children}</context.Provider>;

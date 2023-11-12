@@ -8,11 +8,17 @@ import {
 } from "react-router-dom";
 import LoginPage from "./client/scenes/LoginPage";
 import {AuthContextProvider} from "./ctx/auth/context";
+import Home from "./client/scenes/Home";
+import AuthRoute from "./client/components/AuthRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <LoginPage />,
+    },
+    {
+        path: "/home",
+        element: <AuthRoute><Home /></AuthRoute>,
     },
 ]);
 
