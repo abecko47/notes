@@ -9,9 +9,13 @@ export default function LoginPage() {
     const auth = useAuth();
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [loginResult, setLoginResult] = useState<LoginResultDto | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    if (auth.isSignedIn) {
+        console.log("ahoy")
+        return <Navigate to={"/home"} />
+    }
 
     const run = async () => {
         setIsLoading(true);
@@ -21,7 +25,6 @@ export default function LoginPage() {
         });
 
         if (res !== null) {
-            setLoginResult(res);
             setIsLoading(false);
             navigate("/home");
             return;

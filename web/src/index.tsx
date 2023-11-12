@@ -10,6 +10,7 @@ import LoginPage from "./client/scenes/LoginPage";
 import {AuthContextProvider} from "./ctx/auth/context";
 import Home from "./client/scenes/Home";
 import AuthRoute from "./client/components/AuthRoute";
+import {ApiContextProvider} from "./ctx/api/context";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <AuthContextProvider>
-        <RouterProvider router={router} />
+          <ApiContextProvider>
+            <RouterProvider router={router} />
+          </ApiContextProvider>
       </AuthContextProvider>
   </React.StrictMode>
 );

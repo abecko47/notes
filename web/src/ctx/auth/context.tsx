@@ -9,6 +9,7 @@ export type Context = {
     login: (loginUserDto: LoginUserDto) => Promise<LoginResultDto | null>;
     accessToken: string | null;
     isSignedIn: boolean;
+    authorization: string;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -39,6 +40,7 @@ export const AuthContextProvider = ({children}: React.PropsWithChildren<unknown>
         login,
         accessToken: window.localStorage.getItem(ACCESS_TOKEN),
         isSignedIn: window.localStorage.getItem(ACCESS_TOKEN) !== null,
+        authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
     };
 
     return <context.Provider value={value}>{children}</context.Provider>;
