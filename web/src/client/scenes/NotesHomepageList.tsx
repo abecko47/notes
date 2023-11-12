@@ -15,5 +15,10 @@ export default function NotesHomepageList() {
     run();
   }, [api]);
 
-  return <NotesList notes={notes} />;
+  return (
+      <>
+        <h2>Unsorted notes</h2>
+        <NotesList notes={notes} />
+      </>
+  );
 }

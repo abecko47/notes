@@ -7,6 +7,7 @@ import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
 import {UpsertNoteDto} from "../../const/dto/UpsertNote.dto";
+import {AddRemoveNotebookDto} from "../../const/dto/AddRemoveNotebook.dto";
 
 export type Context = {
   getNotes: () => Promise<NoteDto[]>;
@@ -14,6 +15,8 @@ export type Context = {
   getNotebooks: () => Promise<NotebookDto[]>;
   search: (searchQuery: SearchQueryDto) => Promise<SearchResultDto>;
   upsertNote: (noteDto: UpsertNoteDto) => Promise<NoteDto | null>;
+  addNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
+  removeNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -126,6 +129,57 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     return result.data;
   };
 
+  const addNotebook = async (addRemoveNotebookDto: AddRemoveNotebookDto): Promise<NotebookDto | null> => {
+    const result = await axios.post(
+        `${API_URL}notebooks/`,
+        {
+          ...addRemoveNotebookDto,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: authorization,
+          },
+          validateStatus: () => true,
+        },
+    );
+
+    if (result.status === 401) {
+      signOut();
+      return null;
+    }
+
+    return result.data;
+  };
+
+  const removeNotebook = async (addRemoveNotebookDto: AddRemoveNotebookDto): Promise<NotebookDto | null> => {
+    if (addRemoveNotebookDto.id === undefined) {
+      return null;
+    }
+
+    const result = await axios.delete(
+        `${API_URL}notebooks/${addRemoveNotebookDto.id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: authorization,
+          },
+          validateStatus: () => true,
+        },
+    );
+
+    if (result.status === 401) {
+      signOut();
+      return null;
+    }
+
+    if (result.status !== 200) {
+      return null;
+    }
+
+    return result.data;
+  };
+
   const search = async (query: SearchQueryDto): Promise<SearchResultDto> => {
     const result = await axios.post(
       `${API_URL}search`,
@@ -158,6 +212,8 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     search,
     getNoteById,
     upsertNote,
+    addNotebook,
+    removeNotebook,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;
