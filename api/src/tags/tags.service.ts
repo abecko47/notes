@@ -99,7 +99,7 @@ export class TagsService {
     });
   }
 
-  async assignToNotebook(
+  async editNotebookAndTag(
     tagName: string,
     editTagToNotebookDto: EditTagToNotebookDto,
     user: UserDto,
@@ -143,7 +143,7 @@ export class TagsService {
     });
   }
 
-  async assignToNote(
+  async editNoteAndTag(
     tagName: string,
     editTagAndNoteDto: EditTagAndNoteDto,
     user: UserDto,

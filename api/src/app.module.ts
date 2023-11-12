@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { NotesModule } from './notes/notes.module';
 import { NotebooksModule } from './notebooks/notebooks.module';
 import { TagsModule } from './tags/tags.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TagsModule } from './tags/tags.module';
     NotesModule,
     NotebooksModule,
     TagsModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [

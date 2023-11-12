@@ -57,12 +57,12 @@ export class TagsController {
 
   @ApiBearerAuth()
   @Post('edit/notebook/:tagName')
-  assignToNotebook(
+  editNotebookAndTag(
     @Param('tagName') tagName: string,
     @Body() assignTagToNotebookDto: EditTagToNotebookDto,
     @UsersDecorator() user: UserDto,
   ) {
-    return this.tagsService.assignToNotebook(
+    return this.tagsService.editNotebookAndTag(
       tagName,
       assignTagToNotebookDto,
       user,
@@ -71,11 +71,11 @@ export class TagsController {
 
   @ApiBearerAuth()
   @Post('edit/notebook/:tagName')
-  assignToNote(
+  editNoteAndTag(
     @Param('tagName') tagName: string,
     @Body() assignTagToNoteDto: EditTagAndNoteDto,
     @UsersDecorator() user: UserDto,
   ) {
-    return this.tagsService.assignToNote(tagName, assignTagToNoteDto, user);
+    return this.tagsService.editNoteAndTag(tagName, assignTagToNoteDto, user);
   }
 }
