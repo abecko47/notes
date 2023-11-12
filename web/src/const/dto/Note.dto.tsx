@@ -6,6 +6,7 @@ export type NoteDto = {
   content: string | null;
   notebookId: string | null;
   notebook?: NotebookDto | null;
+  createdAt: string | null;
 };
 
 export const makeEmptyNote = (): NoteDto => {
@@ -14,5 +15,6 @@ export const makeEmptyNote = (): NoteDto => {
     name: "",
     content: null,
     notebookId: null,
+    createdAt: null,
   };
 };

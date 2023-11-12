@@ -3,6 +3,7 @@ import { NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { useApi } from "../../ctx/api/context";
 import { Button } from "@mui/material";
+import NotesList from "./NotesList";
 
 export type NotebooksListArgs = {
   notebooks: NotebookDto[];
@@ -16,7 +17,7 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
     <>
       {notebooks.map((notebook) => (
         <>
-          <div>{notebook.name}</div>
+          <h4>{notebook.name}</h4>
           <Button
             onClick={async () => {
               const result = await removeNotebook(notebook);
@@ -30,6 +31,8 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
           >
             Delete
           </Button>
+          <h5>Notes</h5>
+          <NotesList notes={notebook.notes} />
         </>
       ))}
     </>

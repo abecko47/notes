@@ -70,7 +70,7 @@ export class TagsController {
   }
 
   @ApiBearerAuth()
-  @Post('edit/notebook/:tagName')
+  @Post('edit/note/:tagName')
   editNoteAndTag(
     @Param('tagName') tagName: string,
     @Body() assignTagToNoteDto: EditTagAndNoteDto,

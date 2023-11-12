@@ -5,8 +5,6 @@ import { NotesService } from '../notes/notes.service';
 import { SearchQueryDto } from './dto/search-query.dto';
 import { UserDto } from '../users/dto/User.dto';
 import { queryToTsQueryWithAnd, queryToTsQueryWithOr } from './util/searchUtil';
-import { Note, Notebook } from '@prisma/client';
-import { SearchPayload } from './entity/search-payload.entity';
 
 @Injectable()
 export class SearchService {
@@ -40,13 +38,25 @@ export class SearchService {
         },
         user: userDto,
       },
+      select: {
+        name: true,
+        id: true,
+        notes: {
+          select: {
+            name: true,
+            content: true,
+            createdAt: true,
+            notebookId: true,
+          }
+        },
+      }
     });
   }
 
   async search(
     searchQueryDto: SearchQueryDto,
     userDto: UserDto,
-  ): Promise<SearchPayload> {
+  ) {
     const fullHitQuery = queryToTsQueryWithAnd(searchQueryDto.query);
     const partialHitQuery = queryToTsQueryWithOr(searchQueryDto.query);
 

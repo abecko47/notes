@@ -37,10 +37,22 @@ export class NotebooksService {
   }
 
   findAll(user: UserDto) {
-    return this.prisma.notebook.findMany({
+    return  this.prisma.notebook.findMany({
       where: {
         user,
       },
+      select: {
+        name: true,
+        id: true,
+        notes: {
+          select: {
+            name: true,
+            content: true,
+            createdAt: true,
+            notebookId: true,
+          }
+        },
+      }
     });
   }
 

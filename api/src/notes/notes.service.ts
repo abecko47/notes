@@ -52,6 +52,7 @@ export class NotesService {
     return this.prisma.note.findMany({
       where: {
         user,
+        notebookId: null,
       },
     });
   }
