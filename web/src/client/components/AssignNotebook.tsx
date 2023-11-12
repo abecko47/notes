@@ -47,7 +47,7 @@ export default function AssignNotebook({ noteId, defaultNotebook }: AssignNotebo
 
         const updatedNote = await api.upsertNote({
           id: noteId,
-          notebookId: value.id,
+          notebookId: value.id !== "" ? value.id : null,
         });
 
         if (updatedNote) {

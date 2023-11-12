@@ -74,13 +74,23 @@ export class NotesService {
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
     await this.getNoteSafe(id, user);
 
+    // Check if user is owner of notebook
+    if (updateNoteDto.notebookId !== null) {
+      await this.notebooks.getNotebookSafe(
+          updateNoteDto.notebookId,
+          user,
+      );
+    }
+
     return this.prisma.note.update({
       where: {
         id,
         user,
       },
       data: {
-        ...updateNoteDto
+        name: updateNoteDto.name,
+        content: updateNoteDto.content,
+        notebookId: updateNoteDto.notebookId,
       },
     });
   }
@@ -92,39 +102,6 @@ export class NotesService {
       where: {
         id,
         user,
-      },
-    });
-  }
-
-  async assignToNotebook(
-    id: string,
-    assignNoteToNotebookDto: AssignNoteToNotebookDto,
-    user: UserDto,
-  ) {
-    console.log({ id });
-    const note = await this.getNoteSafe(id, user);
-
-    if (
-      assignNoteToNotebookDto.notebookId === null ||
-      assignNoteToNotebookDto.notebookId === undefined
-    ) {
-      return this.prisma.note.update({
-        where: note,
-        data: {
-          notebookId: null,
-        },
-      });
-    }
-
-    const notebook = await this.notebooks.getNotebookSafe(
-      assignNoteToNotebookDto.notebookId,
-      user,
-    );
-
-    return this.prisma.note.update({
-      where: note,
-      data: {
-        notebookId: notebook.id,
       },
     });
   }
