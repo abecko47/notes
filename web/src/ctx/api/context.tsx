@@ -9,6 +9,7 @@ import {SearchQueryDto} from "../../const/dto/SearchQuery.dto";
 
 export type Context = {
     getNotes: () => Promise<NoteDto[]>;
+    getNoteById: (id: string) => Promise<NoteDto | null>;
     getNotebooks: () => Promise<NotebookDto[]>;
     search: (searchQuery: SearchQueryDto) => Promise<SearchResultDto>;
 };
@@ -31,6 +32,29 @@ export const ApiContextProvider = ({children}: React.PropsWithChildren<unknown>)
         if (result.status === 401) {
             signOut();
             return [];
+        }
+
+        return result.data;
+    }
+
+    const getNoteById = async (id: string): Promise<NoteDto | null> => {
+        const result = await axios.get(`${API_URL}note/${id}`, {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: authorization,
+                },
+                validateStatus: () => true,
+            },
+        );
+
+        if (result.status === 404) {
+            alert("Note has been not found.")
+            return null;
+        }
+
+        if (result.status === 401) {
+            signOut();
+            return null;
         }
 
         return result.data;
@@ -82,6 +106,7 @@ export const ApiContextProvider = ({children}: React.PropsWithChildren<unknown>)
         getNotes,
         getNotebooks,
         search,
+        getNoteById,
     };
 
     return <context.Provider value={value}>{children}</context.Provider>;

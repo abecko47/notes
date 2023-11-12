@@ -12,6 +12,8 @@ import Home from "./client/scenes/Home";
 import AuthRoute from "./client/components/AuthRoute";
 import {ApiContextProvider} from "./ctx/api/context";
 import {SearchContextProvider} from "./ctx/search/context";
+import NoteEditor from "./client/scenes/NoteEditor";
+import {NoteEditorContextProvider} from "./ctx/note-editor/context";
 
 const router = createBrowserRouter([
     {
@@ -26,19 +28,25 @@ const router = createBrowserRouter([
             </SearchContextProvider>
         </AuthRoute>,
     },
+    {
+        path: "/note/:noteId?",
+        element: <AuthRoute>
+            <NoteEditorContextProvider>
+                <NoteEditor />
+            </NoteEditorContextProvider>
+        </AuthRoute>,
+    },
 ]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
       <AuthContextProvider>
           <ApiContextProvider>
             <RouterProvider router={router} />
           </ApiContextProvider>
       </AuthContextProvider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
