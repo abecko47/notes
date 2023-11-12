@@ -30,26 +30,28 @@ export default function Home() {
         if (query !== "") {
             handleSearch();
         }
-    }, [query]);
+    }, [handleSearch, query]);
 
     return <>
-        <TextField id="search" label="Outlined" variant="outlined"
-                   onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}} />
+        <TextField
+            id="search"
+            label="Outlined"
+            variant="outlined"
+            onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}}
+        />
 
         { query === "" && (
             <>
                 <NotesHomepageList/>
                 <NotebooksHomepageList/>
             </>
-        )
-        }
+        ) }
 
-        {
-            query !== "" && loadingSearch ? (<CircularProgress />) : (
-                <>
+        { query !== "" && loadingSearch ? (<CircularProgress />) : (
+            <>
                 <NotesList notes={searchResult.notes} />
-            <NotebooksList notebooks={searchResult.notebooks} />
-                </>
+                <NotebooksList notebooks={searchResult.notebooks} />
+            </>
             )
         }
     </>

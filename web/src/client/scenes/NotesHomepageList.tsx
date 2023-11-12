@@ -13,7 +13,7 @@ export default function NotesHomepageList() {
         }
 
         run();
-    }, []);
+    }, [api]);
 
     return <NotesList notes={notes} />
 }

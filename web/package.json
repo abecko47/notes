@@ -16,6 +16,7 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "axios": "^1.6.1",
+    "formik": "^2.4.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
@@ -32,13 +33,21 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix --ext .ts,.tsx ."
+    "lint-fix": "eslint --fix --ext .ts,.tsx ."
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": [
+        "warn",
+        {
+          "enableDangerousAutofixThisMayCauseInfiniteLoops": true
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [

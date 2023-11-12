@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {makeEmptyNote, NoteDto} from "../../const/dto/Note.dto";
-import {CircularProgress, TextField} from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
 import {Textarea} from "@mui/joy";
 import {useNoteEditor} from "../../ctx/note-editor/context";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 
 export default function NoteEditor() {
     const { getNote, noteId } = useNoteEditor();
@@ -18,7 +19,7 @@ export default function NoteEditor() {
         }
 
         run();
-    }, [noteId]);
+    }, [getNote, noteId]);
 
     if (isLoading) {
         return <>
@@ -26,8 +27,62 @@ export default function NoteEditor() {
         </>
     }
 
-    return <>
-        <TextField id="name" label="note name" variant="outlined" />
-        <Textarea placeholder="note content" />;
-    </>
+    return (
+        <>
+            <Formik
+                initialValues={{ ...currentNote }}
+                validate={values => {
+                    if (!values.name) {
+                        return {
+                            name: "Name is required",
+                        }
+                    }
+                    return {};
+                }}
+                onSubmit={(values, { setSubmitting }) => {
+                    console.log({values})
+                }}
+            >
+                {({
+                      values,
+                      errors,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      isSubmitting,
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            type="name"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                        />
+                        {errors.name}
+                        <Textarea
+                            name="content"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.content ?? ""}
+                        />
+                        <Button type="submit" disabled={isSubmitting}>
+                            Save
+                        </Button>
+                    </form>
+                )}
+                {/*{({ isSubmitting }) => (*/}
+                {/*    <Form>*/}
+                {/*        <TextField type="name" name="name" label="note name" variant="outlined" />*/}
+                {/*        <ErrorMessage name="name" component="div" />*/}
+                {/*        <Textarea name="content" placeholder="note content" />;*/}
+                {/*        <ErrorMessage name="content" component="div" />*/}
+                {/*        <Button type="submit" disabled={isSubmitting}>*/}
+                {/*            Save*/}
+                {/*        </Button>*/}
+                {/*    </Form>*/}
+                {/*)}*/}
+            </Formik>
+        </>
+    );
 }

@@ -10,4 +10,4 @@ export default function AuthRoute({children}: React.PropsWithChildren<unknown>) 
     }
 
     return <>{children}</>;
-};
+}

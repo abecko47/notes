@@ -14,7 +14,7 @@ export default function NotebooksHomepageList() {
         }
 
         run();
-    }, []);
+    }, [api]);
 
     return <NotebooksList notebooks={notebooks} />
 }
