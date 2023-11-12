@@ -9,7 +9,5 @@ describe('AppController', () => {
       controllers: [AppController],
       providers: [],
     }).compile();
-
-    appController = app.get<AppController>(AppController);
   });
 });

@@ -4,7 +4,7 @@ import { NotesController } from './notes.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersModule } from '../users/users.module';
 import { PrismaModule } from '../prisma/prisma.module';
-import {NotebooksService} from "../notebooks/notebooks.service";
+import { NotebooksService } from '../notebooks/notebooks.service';
 
 @Module({
   controllers: [NotesController],

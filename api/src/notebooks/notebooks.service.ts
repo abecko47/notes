@@ -66,6 +66,7 @@ export class NotebooksService {
     });
   }
 
+  // TODO: unassign note from notebook before deletion
   async remove(id: string, user: UserDto) {
     const notebook = await this.getNotebookSafe(id, user);
 

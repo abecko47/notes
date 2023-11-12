@@ -1,6 +1,6 @@
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class AssignNoteToNotebookDto {
-    @ApiProperty()
-    notebookId?: string | null
+  @ApiProperty()
+  notebookId?: string | null;
 }
