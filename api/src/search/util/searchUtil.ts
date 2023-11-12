@@ -1,7 +1,17 @@
 export const queryToTsQueryWithAnd = (query: string) => {
-  return query.replaceAll(' ', ' & ');
+  const words = query
+      .trim()
+      .replace(/\s\s+/g, " ")
+      .trim()
+      .split(" ");
+  return `${words.join(":* & ")}:*`;
 };
 
 export const queryToTsQueryWithOr = (query: string) => {
-  return query.replaceAll(' ', ' | ');
+  const words = query
+      .trim()
+      .replace(/\s\s+/g, " ")
+      .trim()
+      .split(" ");
+  return `${words.join(":* | ")}:*`;
 };

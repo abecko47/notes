@@ -11,6 +11,7 @@ import {AuthContextProvider} from "./ctx/auth/context";
 import Home from "./client/scenes/Home";
 import AuthRoute from "./client/components/AuthRoute";
 import {ApiContextProvider} from "./ctx/api/context";
+import {SearchContextProvider} from "./ctx/search/context";
 
 const router = createBrowserRouter([
     {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/home",
-        element: <AuthRoute><Home /></AuthRoute>,
+        element: <AuthRoute>
+            <SearchContextProvider>
+            <Home />
+            </SearchContextProvider>
+        </AuthRoute>,
     },
 ]);
 

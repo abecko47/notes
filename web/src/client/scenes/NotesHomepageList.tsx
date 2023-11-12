@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useApi} from "../../ctx/api/context";
-import {NoteDto} from "../../const/dto/NoteDto";
+import {NoteDto} from "../../const/dto/Note.dto";
+import NotesList from "../components/NotesList";
 
-export default function NotesList() {
+export default function NotesHomepageList() {
     const api = useApi();
     const [notes, setNotes] = useState<NoteDto[]>([]);
 
@@ -14,5 +15,5 @@ export default function NotesList() {
         run();
     }, []);
 
-    return <>{notes.map(note => (<div>{note.name}</div>))}</>
+    return <NotesList notes={notes} />
 }

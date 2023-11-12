@@ -1,34 +1,87 @@
 import React from "react";
 import {useAuth} from "../auth/context";
-import {NoteDto} from "../../const/dto/NoteDto";
 import axios from "axios";
 import {API_URL} from "../../const/config";
+import {NoteDto} from "../../const/dto/Note.dto";
+import {NotebookDto} from "../../const/dto/Notebook.dto";
+import {SearchResultDto} from "../../const/dto/SearchResult.dto";
+import {SearchQueryDto} from "../../const/dto/SearchQuery.dto";
 
 export type Context = {
     getNotes: () => Promise<NoteDto[]>;
+    getNotebooks: () => Promise<NotebookDto[]>;
+    search: (searchQuery: SearchQueryDto) => Promise<SearchResultDto>;
 };
 
 const context = React.createContext<Context | null>(null);
 
 export const ApiContextProvider = ({children}: React.PropsWithChildren<unknown>) => {
-    const {authorization} = useAuth();
+    const {authorization, signOut} = useAuth();
 
-    const getNotes = async () => {
+    const getNotes = async (): Promise<NoteDto[]> => {
         const result = await axios.get(`${API_URL}notes`, {
                 headers: {
                     Accept: 'application/json',
                     Authorization: authorization,
-                }
+                },
+            validateStatus: () => true,
+            },
+        );
+
+        if (result.status === 401) {
+            signOut();
+            return [];
+        }
+
+        return result.data;
+    }
+
+    const getNotebooks = async (): Promise<NotebookDto[]> => {
+        const result = await axios.get(`${API_URL}notebooks`, {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: authorization,
+                },
+            validateStatus: () => true,
             }
         );
 
-        console.log({result})
+        if (result.status === 401) {
+            signOut();
+            return [];
+        }
+
+        return result.data;
+    }
+
+    const search = async (query: SearchQueryDto): Promise<SearchResultDto> => {
+        const result = await axios.post(`${API_URL}search`, {
+                    ...query
+            },
+            {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: authorization,
+                },
+                validateStatus: () => true,
+            }
+        );
+
+        if (result.status === 401) {
+            signOut();
+            return {
+                notes: [],
+                notebooks: [],
+            }
+        }
 
         return result.data;
     }
 
     const value: Context = {
         getNotes,
+        getNotebooks,
+        search,
     };
 
     return <context.Provider value={value}>{children}</context.Provider>;

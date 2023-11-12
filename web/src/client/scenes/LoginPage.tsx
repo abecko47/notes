@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../ctx/auth/context";
-import {LoginResultDto} from "../../const/dto/login-result.dto";
 import {Button, CircularProgress, TextField} from "@mui/material";
 import {Navigate} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +9,8 @@ export default function LoginPage() {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     if (auth.isSignedIn) {
-        console.log("ahoy")
         return <Navigate to={"/home"} />
     }
 
@@ -25,8 +22,7 @@ export default function LoginPage() {
         });
 
         if (res !== null) {
-            setIsLoading(false);
-            navigate("/home");
+            window.location.replace("/home");
             return;
         }
 
