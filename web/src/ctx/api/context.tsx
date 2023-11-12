@@ -17,6 +17,7 @@ export type Context = {
   upsertNote: (noteDto: UpsertNoteDto) => Promise<NoteDto | null>;
   addNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
   removeNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
+  removeNote: (noteId: string) => Promise<NoteDto | null>;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -113,6 +114,29 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
 
     if (result.status > 201) {
       alert("Some error happened.");
+      return null;
+    }
+
+    return result.data;
+  };
+
+  const removeNote = async (
+      noteId: string,
+  ): Promise<NoteDto | null> => {
+    const result = await axios.delete(`${API_URL}notes/${noteId}`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: authorization,
+      },
+      validateStatus: () => true,
+    });
+
+    if (result.status === 401) {
+      signOut();
+      return null;
+    }
+
+    if (result.status !== 200) {
       return null;
     }
 
@@ -222,6 +246,7 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     upsertNote,
     addNotebook,
     removeNotebook,
+    removeNote,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;

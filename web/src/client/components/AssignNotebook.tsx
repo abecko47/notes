@@ -40,10 +40,11 @@ export default function AssignNotebook({ noteId, defaultNotebook }: AssignNotebo
     <Autocomplete
       onChange={async (e, value) => {
         e.preventDefault();
+          console.log({value})
+          if (!value) {
+              return;
+          }
         setIsLoading(true);
-        if (!value) {
-          return;
-        }
 
         const updatedNote = await api.upsertNote({
           id: noteId,

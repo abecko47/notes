@@ -46,6 +46,7 @@ export class NotebooksService {
         id: true,
         notes: {
           select: {
+            id: true,
             name: true,
             content: true,
             createdAt: true,
