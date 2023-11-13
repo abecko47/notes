@@ -11,6 +11,9 @@ import NotebooksList from "../components/NotebooksList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { useAuth } from "../../ctx/auth/context";
+import RootLayout from "../components/RootLayout";
+import {Grid} from "@mui/joy";
+import {LastGridItem, FullWidthTextField} from "../components/StyledComponents";
 
 export default function Home() {
   const search = useSearch();
@@ -48,30 +51,45 @@ export default function Home() {
   }, [query]);
 
   return (
-    <>
-      <h1>Super notes</h1>
-      <Button onClick={() => auth.signOut()}>Sign out</Button>
-      <TextField
-        id="search"
-        label="Search"
-        variant="outlined"
-        onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
-          setQuery(e.target.value);
-        }}
-      />
-
-      <Button
-        onClick={() => {
-          navigate("/note");
-        }}
-      >
-        New note
-      </Button>
+    <RootLayout>
+        <Grid container alignItems={"center"} xs={12}>
+            <Grid xs={2}>
+                <h1>Note App</h1>
+            </Grid>
+            <Grid xs={8}>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        navigate("/note");
+                    }}
+                >
+                    Add note
+                </Button>
+            </Grid>
+            <LastGridItem xs={2}>
+                <Button onClick={() => auth.signOut()}>Sign out</Button>
+            </LastGridItem>
+        </Grid>
+        <Grid padding={0} xs={12}>
+            <FullWidthTextField
+                id="search"
+                label="Search"
+                variant="outlined"
+                onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                    setQuery(e.target.value);
+                }}
+            />
+        </Grid>
 
       {query === "" && (
         <>
-          <NotebooksHomepageList />
-          <NotesHomepageList />
+            <Grid container xs={12}>
+                <NotebooksHomepageList />
+            </Grid>
+            <Grid container xs={12}>
+                <NotesHomepageList />
+            </Grid>
+
         </>
       )}
 
@@ -83,7 +101,7 @@ export default function Home() {
             <>
               <h2>Notebooks</h2>
               <NotebooksList
-                onDelete={(notebookId) => {
+                onDelete={() => {
                   handleSearch();
                 }}
                 notebooks={searchResult.notebooks}
@@ -94,6 +112,6 @@ export default function Home() {
           )}
         </>
       )}
-    </>
+    </RootLayout>
   );
 }
