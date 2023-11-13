@@ -110,7 +110,6 @@ export default function NoteEditor() {
           return {};
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          const redirect = values.id === "";
           const note = await upsertNote({
             ...values,
             notebookId: currentNote.notebookId ?? undefined,
@@ -123,10 +122,6 @@ export default function NoteEditor() {
           }
 
           setSubmitting(false);
-
-          // if (redirect) {
-          //     navigate(`/note/${note?.id}`)
-          // }
         }}
       >
         {({ values, errors, handleChange, handleBlur, handleSubmit, isSubmitting }) => (

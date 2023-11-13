@@ -109,10 +109,9 @@ export class NotesService {
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
-    await this.getNoteSafe(id, user);
-
+    const note = await this.getNoteSafe(id, user);
     // Check if user is owner of notebook
-    if (updateNoteDto.notebookId !== null) {
+    if (updateNoteDto.notebookId !== null && updateNoteDto.notebookId !== undefined) {
       await this.notebooks.getNotebookSafe(
           updateNoteDto.notebookId,
           user,
@@ -129,6 +128,20 @@ export class NotesService {
         content: updateNoteDto.content,
         notebookId: updateNoteDto.notebookId,
       },
+      select: {
+        id: true,
+        name: true,
+        content: true,
+        notesAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
+      }
     });
   }
 
