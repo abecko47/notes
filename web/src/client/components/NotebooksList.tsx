@@ -4,6 +4,7 @@ import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { useApi } from "../../ctx/api/context";
 import { Button } from "@mui/material";
 import NotesList from "./NotesList";
+import TagManager from "./TagManager";
 
 export type NotebooksListArgs = {
   notebooks: NotebookDto[];
@@ -31,6 +32,7 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
           >
             Delete
           </Button>
+          <TagManager notebookId={notebook.id} tagAffinity={"notebook"} notebooksAndTags={notebook.notebooksAndTags} />
           <h5>Notes</h5>
           <NotesList notes={notebook.notes} />
         </>

@@ -7,7 +7,8 @@ import TagList from "./TagList";
 export type TagManagerArgs = {
   notesAndTags?: NoteAndTagDto[];
   notebooksAndTags?: NotebookAndTagDto[];
-  noteId: string;
+  noteId?: string;
+  notebookId?: string;
   tagAffinity: TagAffinity;
 };
 
@@ -16,13 +17,14 @@ export default function TagManager({
   notebooksAndTags,
   tagAffinity,
   noteId,
+    notebookId,
 }: TagManagerArgs) {
   if (tagAffinity === "note" && notesAndTags !== undefined) {
     return <TagList noteId={noteId} tags={notesAndTags.map((noteAndTag) => noteAndTag.tag)} />;
   }
 
   if (tagAffinity === "notebook" && notebooksAndTags !== undefined) {
-    return <>{notebooksAndTags.map((notebookAndTag) => notebookAndTag.tag.name).join(", ")}</>;
+    return <TagList notebookId={notebookId} tags={notebooksAndTags.map((notebookAndTag) => notebookAndTag.tag)} />;
   }
 
   return <></>;

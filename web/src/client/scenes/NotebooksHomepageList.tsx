@@ -3,10 +3,12 @@ import { useApi } from "../../ctx/api/context";
 import { NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import NotebooksList from "../components/NotebooksList";
-import { Button, TextField } from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
+import {useTagsObserver} from "../../ctx/tag-update/context";
 
 export default function NotebooksHomepageList() {
   const api = useApi();
+  const { register } = useTagsObserver();
   const [notebooks, setNotebooks] = useState<NotebookDto[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [newNotebookName, setNewNotebookName] = useState("");
@@ -19,7 +21,15 @@ export default function NotebooksHomepageList() {
 
   useEffect(() => {
     refreshNotebooks();
-  }, [api]);
+
+    register("notebooksHomepage", () => {
+          refreshNotebooks();
+    })
+  }, []);
+
+  if (isLoading) {
+      return <CircularProgress />
+  }
 
   return (
     <>

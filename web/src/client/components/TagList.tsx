@@ -8,12 +8,17 @@ import { useApi } from "../../ctx/api/context";
 
 export type TagsListArgs = {
   tags: TagDto[];
-  noteId: string;
+  noteId?: string;
+  notebookId?: string;
 };
 
-export default function TagList({ tags, noteId }: TagsListArgs) {
+export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
   const { notify } = useTagsObserver();
-  const { editNoteAndTag } = useApi();
+  const { editNoteAndTag, editNotebookAndTag } = useApi();
+
+  if (noteId === undefined && notebookId === undefined) {
+    return <></>;
+  }
 
   return (
     <>
@@ -23,18 +28,35 @@ export default function TagList({ tags, noteId }: TagsListArgs) {
             <span>{tag.name}</span>
             <Button
               onClick={async () => {
-                const result = await editNoteAndTag({
-                  tagName: tag.name,
-                  action: "remove",
-                  noteId,
-                });
+                if (noteId !== undefined) {
+                  const result = await editNoteAndTag({
+                    tagName: tag.name,
+                    action: "remove",
+                    noteId,
+                  });
 
-                if (!result) {
-                  alert("Something went wrong.")
-                  return;
+                  if (!result) {
+                    alert("Something went wrong.")
+                    return;
+                  }
+
+                  notify();
                 }
 
-                notify();
+                if (notebookId !== undefined) {
+                  const result = await editNotebookAndTag({
+                    tagName: tag.name,
+                    action: "remove",
+                    notebookId,
+                  });
+
+                  if (!result) {
+                    alert("Something went wrong.")
+                    return;
+                  }
+
+                  notify();
+                }
               }}
             >
               Delete
