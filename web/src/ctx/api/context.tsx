@@ -2,13 +2,13 @@ import React from "react";
 import { useAuth } from "../auth/context";
 import axios from "axios";
 import { API_URL } from "../../const/config";
-import {makeEmptyNote, NoteAndTagDto, NoteDto} from "../../const/dto/Note.dto";
+import { makeEmptyNote, NoteAndTagDto, NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
 import { UpsertNoteDto } from "../../const/dto/UpsertNote.dto";
 import { AddRemoveNotebookDto } from "../../const/dto/AddRemoveNotebook.dto";
-import {EditNoteAndTagDto} from "../../const/dto/EditNoteAndTagDto";
+import { EditNoteAndTagDto } from "../../const/dto/EditNoteAndTagDto";
 
 export type Context = {
   getNotes: () => Promise<NoteDto[]>;
@@ -122,9 +122,7 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     return result.data;
   };
 
-  const removeNote = async (
-      noteId: string,
-  ): Promise<NoteDto | null> => {
+  const removeNote = async (noteId: string): Promise<NoteDto | null> => {
     const result = await axios.delete(`${API_URL}notes/${noteId}`, {
       headers: {
         Accept: "application/json",
@@ -188,20 +186,20 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
   };
 
   const editNoteAndTag = async (
-      editNoteAndTagDto: EditNoteAndTagDto,
+    editNoteAndTagDto: EditNoteAndTagDto,
   ): Promise<NoteAndTagDto | null> => {
     const result = await axios.post(
-        `${API_URL}tags/edit/note/${editNoteAndTagDto.tagName}`,
-        {
-          ...editNoteAndTagDto,
+      `${API_URL}tags/edit/note/${editNoteAndTagDto.tagName}`,
+      {
+        ...editNoteAndTagDto,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: authorization,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: authorization,
-          },
-          validateStatus: () => true,
-        },
+        validateStatus: () => true,
+      },
     );
 
     if (result.status === 401) {

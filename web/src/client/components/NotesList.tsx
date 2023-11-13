@@ -11,13 +11,13 @@ export default function NotesList({ notes }: NotesListArgs) {
   return (
     <>
       {notes.map((note) => (
-          <>
-        <Link to={`/note/${note.id}`}>
-          <div>{note.name}</div>
-        </Link>
-  <TagManager noteId={note.id} tagAffinity={"note"} notesAndTags={note.notesAndTags} />
-          </>
-))}
+        <>
+          <Link to={`/note/${note.id}`}>
+            <div>{note.name}</div>
+          </Link>
+          <TagManager noteId={note.id} tagAffinity={"note"} notesAndTags={note.notesAndTags} />
+        </>
+      ))}
     </>
   );
 }

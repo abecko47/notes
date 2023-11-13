@@ -1,5 +1,5 @@
 export type TagDto = {
-    name: string;
-}
+  name: string;
+};
 
 export type TagAffinity = "note" | "notebook";

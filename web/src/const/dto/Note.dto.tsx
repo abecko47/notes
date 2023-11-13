@@ -1,9 +1,9 @@
 import { NotebookDto } from "./Notebook.dto";
-import {TagDto} from "./tag.dto";
+import { TagDto } from "./tag.dto";
 
 export type NoteAndTagDto = {
   tag: TagDto;
-}
+};
 
 export type NoteDto = {
   id: string;
@@ -12,7 +12,7 @@ export type NoteDto = {
   notebookId: string | null;
   notebook?: NotebookDto | null;
   createdAt: string | null;
-  notesAndTags: NoteAndTagDto[]
+  notesAndTags: NoteAndTagDto[];
 };
 
 export const makeEmptyNote = (): NoteDto => {

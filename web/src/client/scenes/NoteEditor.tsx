@@ -9,8 +9,8 @@ import {
   makeEmptyNotebook,
   makeEmptyNotebookForAssign,
 } from "../../const/dto/AddRemoveNotebook.dto";
-import {useApi} from "../../ctx/api/context";
-import {Navigate, useNavigate} from "react-router-dom";
+import { useApi } from "../../ctx/api/context";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function NoteEditor() {
   const { getNote, noteId, upsertNote } = useNoteEditor();
@@ -47,20 +47,22 @@ export default function NoteEditor() {
           defaultNotebook={currentNote.notebook ?? makeEmptyNotebook()}
         />
       )}
-      <Button onClick={async () => {
+      <Button
+        onClick={async () => {
           setIsLoading(true);
-        const result = await removeNote(currentNote.id);
+          const result = await removeNote(currentNote.id);
 
-        if (!result) {
+          if (!result) {
             alert("Some error happened");
-            setIsLoading(false)
+            setIsLoading(false);
             return null;
-        }
+          }
 
-        alert("Successfully deleted.")
-          setIsLoading(false)
-        navigate("/home");
-      }}>
+          alert("Successfully deleted.");
+          setIsLoading(false);
+          navigate("/home");
+        }}
+      >
         Delete
       </Button>
       <Formik

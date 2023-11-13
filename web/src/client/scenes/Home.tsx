@@ -8,7 +8,7 @@ import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
-import {useTagsObserver} from "../../ctx/tag-update/context";
+import { useTagsObserver } from "../../ctx/tag-update/context";
 
 export default function Home() {
   const search = useSearch();
@@ -42,9 +42,7 @@ export default function Home() {
     });
   }, [query]);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

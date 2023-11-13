@@ -11,7 +11,7 @@ import { ApiContextProvider } from "./ctx/api/context";
 import { SearchContextProvider } from "./ctx/search/context";
 import NoteEditor from "./client/scenes/NoteEditor";
 import { NoteEditorContextProvider } from "./ctx/note-editor/context";
-import {TagContextProvider} from "./ctx/tag-update/context";
+import { TagContextProvider } from "./ctx/tag-update/context";
 
 const router = createBrowserRouter([
   {
@@ -44,9 +44,9 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <AuthContextProvider>
     <ApiContextProvider>
-    <TagContextProvider>
-      <RouterProvider router={router} />
-    </TagContextProvider>
+      <TagContextProvider>
+        <RouterProvider router={router} />
+      </TagContextProvider>
     </ApiContextProvider>
   </AuthContextProvider>,
 );
