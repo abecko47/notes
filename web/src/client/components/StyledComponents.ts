@@ -26,6 +26,8 @@ export const NotebookAddButtonContainer = styled(Grid)`
 
 export const NotebookBorderContainer = styled(Grid)`
     border: 1px solid black;
+  border-radius: 10px;
+  margin: 0 0 4px 0;
 `;
 
 export const NoteBorderContainer = styled(Grid)`
@@ -40,5 +42,23 @@ export const BackgroundColorContainer = styled(Grid)`
 `;
 
 export const MarginedHeader = styled("h4")`
+    margin-left: 8px;
+`;
+
+export const MarginedSmallHeader = styled("h5")`
+    margin-left: 8px;
+`;
+
+export const SmallText = styled("span")`
+    font-size: small;
+`;
+
+export const DeleteTagButton = styled(Button)`
+  margin: 0;
+  padding: -30px;
+  max-width: 10px;
+`;
+
+export const MarginedContainer = styled(Grid)`
     margin-left: 8px;
 `;

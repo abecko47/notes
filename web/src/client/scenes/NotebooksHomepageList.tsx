@@ -78,8 +78,9 @@ export default function NotebooksHomepageList() {
                 </FullGridButton>
             </NotebookAddButtonContainer>
         </Grid>
-
-        <Grid container xs={12}>
+        <Grid spacing={1} container xs={12} style={{
+            marginTop: "8px",
+        }}>
             <NotebooksList
                 onDelete={() => {
                     refreshNotebooks();

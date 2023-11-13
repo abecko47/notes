@@ -5,7 +5,8 @@ import { TagAction, TagAffinity, TagDto } from "../../const/dto/tag.dto";
 import { Button, TextField } from "@mui/material";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { useApi } from "../../ctx/api/context";
-import {Grid} from "@mui/joy";
+import {Divider, Grid} from "@mui/joy";
+import {DeleteTagButton, LastGridItem, MarginedContainer, MarginedSmallHeader, SmallText} from "./StyledComponents";
 
 export type TagsListArgs = {
   tags: TagDto[];
@@ -61,34 +62,39 @@ export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
   };
 
   return (
-    <Grid container xs={12}>
-      <Grid container xs={12}>
+    <Grid spacing={1} container xs={12}>
+      {
+        tags.length > 0 && (<Grid xs={12}>
+            <SmallText>Tags</SmallText>
+          </Grid>)
+      }
+
+      <MarginedContainer container xs={12}>
         {tags.map((tag) => {
           return (
-            <Grid style={{
-              backgroundColor: "rgba(0,0,0,0.1)",
-            }} container xs={3}>
-              <Grid xs={6}>
-                <div>#{tag.name}</div>
-              </Grid>
-              <Grid xs={3}>
-                <Button
-                    name={"remove-tag"}
-                    variant={"contained"}
-                    color={"error"}
-                    onClick={() => {
-                      editTag(tag.name, "remove", noteId, notebookId);
-                    }}
-                >
-                  -
-                </Button>
-              </Grid>
+            <Grid container xs={12} alignItems={"center"}>
+                <Grid xs={6}>
+                  <SmallText>#{tag.name}</SmallText>
+                </Grid>
+                <LastGridItem xs={6}>
+                  <DeleteTagButton
+                      size={"small"}
+                      name={"remove-tag"}
+                      variant={"contained"}
+                      color={"error"}
+                      onClick={() => {
+                        editTag(tag.name, "remove", noteId, notebookId);
+                      }}
+                  >
+                    -
+                  </DeleteTagButton>
+                </LastGridItem>
             </Grid>
           );
         })}
-      </Grid>
-      <Grid container xs={12}>
-        <Grid xs={9}>
+      </MarginedContainer>
+      <MarginedContainer alignItems={"center"} container xs={12}>
+        <Grid xs={8}>
           <TextField
               type="name"
               label={"Add new tag"}
@@ -98,7 +104,7 @@ export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
               }}
           />
         </Grid>
-        <Grid xs={3}>
+        <LastGridItem xs={4}>
           <Button
               name={"add-tag"}
               variant={"contained"}
@@ -108,8 +114,8 @@ export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
           >
             +
           </Button>
-        </Grid>
-      </Grid>
+        </LastGridItem>
+      </MarginedContainer>
     </Grid>
   );
 }

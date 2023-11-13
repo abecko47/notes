@@ -62,6 +62,24 @@ export class SearchService {
             content: true,
             createdAt: true,
             notebookId: true,
+            notesAndTags: {
+              select: {
+                tag: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        notebooksAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },

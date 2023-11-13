@@ -51,6 +51,15 @@ export class NotebooksService {
             content: true,
             createdAt: true,
             notebookId: true,
+            notesAndTags: {
+              select: {
+                tag: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
         notebooksAndTags: {
@@ -82,6 +91,15 @@ export class NotebooksService {
             content: true,
             createdAt: true,
             notebookId: true,
+            notesAndTags: {
+              select: {
+                tag: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
         notebooksAndTags: {

@@ -5,8 +5,14 @@ import { useApi } from "../../ctx/api/context";
 import { Button } from "@mui/material";
 import NotesList from "./NotesList";
 import TagManager from "./TagManager";
-import {Grid} from "@mui/joy";
-import {FullGridButton, LastGridItem, NotebookBorderContainer, MarginedHeader} from "./StyledComponents";
+import {Divider, Grid} from "@mui/joy";
+import {
+  FullGridButton,
+  LastGridItem,
+  NotebookBorderContainer,
+  MarginedHeader,
+  MarginedSmallHeader, MarginedContainer
+} from "./StyledComponents";
 
 export type NotebooksListArgs = {
   notebooks: NotebookDto[];
@@ -22,7 +28,7 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
         <Grid xs={12}>
           <NotebookBorderContainer container xs={12}>
             <Grid xs={10}>
-              <MarginedHeader>{notebook.name}</MarginedHeader>
+              <MarginedHeader>Notebook "{notebook.name}"</MarginedHeader>
             </Grid>
             <LastGridItem xs={2}>
               <FullGridButton
@@ -42,16 +48,23 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
                 Remove
               </FullGridButton>
             </LastGridItem>
-            <NotesList notes={notebook.notes} />
+            <Grid xs={12}>
+              <MarginedSmallHeader>Notes</MarginedSmallHeader>
+            </Grid>
+            <Grid xs={12}>
+              <NotesList notes={notebook.notes} />
+            </Grid>
+            <Grid xs={12}>
+              <Divider />
+            </Grid>
+            <MarginedContainer xs={3}>
+              <TagManager
+                  notebookId={notebook.id}
+                  tagAffinity={"notebook"}
+                  notebooksAndTags={notebook.notebooksAndTags}
+              />
+            </MarginedContainer>
           </NotebookBorderContainer>
-
-
-          <TagManager
-            notebookId={notebook.id}
-            tagAffinity={"notebook"}
-            notebooksAndTags={notebook.notebooksAndTags}
-          />
-          <h5>Notes</h5>
 
         </Grid>
       ))}
