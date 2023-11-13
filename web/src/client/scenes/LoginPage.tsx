@@ -3,6 +3,8 @@ import { useAuth } from "../../ctx/auth/context";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import RootLayout from "../components/RootLayout";
+import {Grid} from "@mui/joy";
 
 export default function LoginPage() {
   const auth = useAuth();
@@ -52,40 +54,58 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-      <TextField
-        label="Username"
-        variant="outlined"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />
-      <TextField
-        label="Password"
-        variant="outlined"
-        value={password}
-        type={"password"}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <Button
-        variant="contained"
-        onClick={() => {
-          login();
-        }}
-      >
-        Login
-      </Button>
-      <Button
-        variant="contained"
-        onClick={() => {
-          register();
-        }}
-      >
-        Register
-      </Button>
-    </>
+    <RootLayout>
+        <Grid direction={"column"} spacing={2} container xs={12}>
+            <Grid xs={12}>
+                <Grid container xs={12}>
+                    <h1>Notes App</h1>
+                </Grid>
+            </Grid>
+            <Grid xs={12}>
+                <TextField
+                    label="Username"
+                    variant="outlined"
+                    value={username}
+                    onChange={(e) => {
+                        setUsername(e.target.value);
+                    }}
+                />
+            </Grid>
+            <Grid xs={12}>
+                <TextField
+                    label="Password"
+                    variant="outlined"
+                    value={password}
+                    type={"password"}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}
+                />
+            </Grid>
+            <Grid container xs={9}>
+                <Grid xs={1}>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            login();
+                        }}
+                    >
+                        Sign In
+                    </Button>
+                </Grid>
+                <Grid xs={1}>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            register();
+                        }}
+                    >
+                        Sign Up
+                    </Button>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </RootLayout>
   );
 }
