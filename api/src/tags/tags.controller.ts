@@ -16,7 +16,7 @@ import { UserDto } from '../users/dto/User.dto';
 import { EditTagToNotebookDto } from './dto/edit-tag-to-notebook.dto';
 import { EditTagAndNoteDto } from './dto/edit-tag-and-note.dto';
 
-@ApiTags('tags')
+@ApiTags('Tags')
 @Controller('tags')
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}

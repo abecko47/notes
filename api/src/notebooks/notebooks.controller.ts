@@ -14,7 +14,7 @@ import { UsersDecorator } from '../users/users.decorator';
 import { UserDto } from '../users/dto/User.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('notebooks')
+@ApiTags('Notebooks')
 @Controller('notebooks')
 export class NotebooksController {
   constructor(private readonly notebooksService: NotebooksService) {}

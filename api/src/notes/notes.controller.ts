@@ -14,7 +14,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersDecorator } from '../users/users.decorator';
 import { UserDto } from '../users/dto/User.dto';
 
-@ApiTags('notes')
+@ApiTags('Notes')
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
