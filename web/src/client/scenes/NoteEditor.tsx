@@ -194,6 +194,8 @@ export default function NoteEditor() {
                 <Grid xs={12}>{errors.name}</Grid>
                 <Grid xs={12}>
                   <Textarea
+                    autoFocus
+                    variant={"plain"}
                     name="content"
                     minRows={10}
                     placeholder={"Note content"}
