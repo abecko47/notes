@@ -14,7 +14,7 @@ export default function LoginPage() {
     return <Navigate to={"/home"} />;
   }
 
-  const run = async () => {
+  const login = async () => {
     setIsLoading(true);
     const res = await auth.login({
       username,
@@ -29,6 +29,22 @@ export default function LoginPage() {
     alert("Some error happened, please try again later or with different credentials.");
     setIsLoading(false);
   };
+
+    const register = async () => {
+        setIsLoading(true);
+        const res = await auth.register({
+            username,
+            password,
+        });
+
+        if (res !== null) {
+            window.location.replace("/home");
+            return;
+        }
+
+        alert("Username already exists, please try another one.");
+        setIsLoading(false);
+    };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -56,11 +72,19 @@ export default function LoginPage() {
       <Button
         variant="contained"
         onClick={() => {
-          run();
+          login();
         }}
       >
         Login
       </Button>
+        <Button
+            variant="contained"
+            onClick={() => {
+                register();
+            }}
+        >
+            Register
+        </Button>
     </>
   );
 }

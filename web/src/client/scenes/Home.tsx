@@ -10,12 +10,13 @@ import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import {useLocation, useNavigate, useNavigation} from "react-router-dom";
+import {useAuth} from "../../ctx/auth/context";
 
 export default function Home() {
   const search = useSearch();
   const { register } = useTagsObserver();
   const navigate = useNavigate();
-  const location = useLocation();
+  const auth = useAuth();
 
   const [query, setQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
@@ -23,8 +24,6 @@ export default function Home() {
     notes: [],
     notebooks: [],
   });
-
-  console.log({l: location.key})
 
   const handleSearch = async () => {
     setLoadingSearch(true);
@@ -46,10 +45,12 @@ export default function Home() {
         handleSearch();
       }
     });
-  }, [query, location.pathname]);
+  }, [query]);
 
   return (
     <>
+      <h1>Super notes</h1>
+      <Button onClick={() => auth.signOut()}>Sign out</Button>
       <TextField
         id="search"
         label="Search"

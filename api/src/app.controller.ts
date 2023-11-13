@@ -23,6 +23,14 @@ export class AppController {
     return this.authService.login(user);
   }
 
+  @Public()
+  @Post('auth/register')
+  async register(
+      @Body() loginUserDto: LoginUserDto,
+  ): Promise<{ accessToken: string }> {
+    return this.authService.register(loginUserDto);
+  }
+
   @ApiBearerAuth()
   @Get('profile')
   getProfile(@UsersDecorator() user: UserDto) {

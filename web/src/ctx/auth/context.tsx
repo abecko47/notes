@@ -7,6 +7,7 @@ import { LoginResultDto } from "../../const/dto/LoginResult.dto";
 
 export type Context = {
   login: (loginUserDto: LoginUserDto) => Promise<LoginResultDto | null>;
+  register: (loginUserDto: LoginUserDto) => Promise<LoginResultDto | null>;
   signOut: () => void;
   accessToken: string | null;
   isSignedIn: boolean;
@@ -19,10 +20,29 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknow
   const login = async (loginUserDto: LoginUserDto) => {
     try {
       const { data, status } = await axios.post<LoginResultDto>(`${API_URL}auth/login`, {
+        ...loginUserDto,
+      }, {
         headers: {
           Accept: "application/json",
         },
+      });
+
+      window.localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+
+      return data;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const register = async (loginUserDto: LoginUserDto) => {
+    try {
+      const { data, status } = await axios.post<LoginResultDto>(`${API_URL}auth/register`, {
         ...loginUserDto,
+      }, {
+        headers: {
+          Accept: "application/json",
+        },
       });
 
       window.localStorage.setItem(ACCESS_TOKEN, data.accessToken);
@@ -44,6 +64,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknow
     isSignedIn: window.localStorage.getItem(ACCESS_TOKEN) !== null,
     authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
     signOut,
+    register,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;
