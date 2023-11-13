@@ -1,16 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserDto } from '../users/dto/User.dto';
-import { UsersService } from '../users/users.service';
 import { throwIfUserIsNotOwner } from '../util/process.env';
 import { NotebooksService } from '../notebooks/notebooks.service';
-import { AssignNoteToNotebookDto } from './dto/assign-note-to-notebook.dto';
 
 @Injectable()
 export class NotesService {
@@ -72,6 +66,12 @@ export class NotesService {
         id: true,
         name: true,
         content: true,
+        notebook: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
         notesAndTags: {
           select: {
             tag: {
@@ -95,6 +95,12 @@ export class NotesService {
         id: true,
         name: true,
         content: true,
+        notebook: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
         notesAndTags: {
           select: {
             tag: {

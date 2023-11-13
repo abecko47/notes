@@ -6,9 +6,9 @@ import { CircularProgress } from "@mui/material";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { Grid } from "@mui/joy";
 import {
-  FullGridButton,
-  FullWidthTextField,
-  NotebookAddButtonContainer,
+    FullGridButton,
+    FullWidthTextField,
+    NotebookAddButtonContainer, SmallText,
 } from "../components/StyledComponents";
 
 export default function NotebooksHomepageList() {
@@ -41,6 +41,9 @@ export default function NotebooksHomepageList() {
       <Grid xs={12}>
         <h2>Notebooks</h2>
       </Grid>
+        <Grid xs={12}>
+            <SmallText>You are able to assign note to notebook inside Note Editor. Click on "View note"</SmallText>
+        </Grid>
       <Grid alignItems={"center"} alignContent={"flex-end"} container xs={12}>
         <Grid xs={4}>
           <FullWidthTextField
