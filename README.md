@@ -67,6 +67,11 @@ Run dev frontend
 npm run start
 ```
 # URLs
-- http://localhost:3000 - React App (frontend)
+- http://localhost:3000 - React App (frontend). Default user with mocked data has `default` username and `qwerty12345` password.
 - http://localhost:4000 - NestJs App (backend)
 - http://localhost:4000/apiref - Swagger
+# Screenshots
+<img width="256" alt="Screenshot 2023-11-13 at 10 55 03 AM" src="https://github.com/abecko47/notes/assets/10388830/f0ed643a-8016-40ac-b9da-e62b16bdb371">
+<img width="1797" alt="Screenshot 2023-11-13 at 10 53 14 AM" src="https://github.com/abecko47/notes/assets/10388830/9cd7241d-ab04-4396-9295-a3082c193fb9">
+<img width="1797" alt="Screenshot 2023-11-13 at 10 53 35 AM" src="https://github.com/abecko47/notes/assets/10388830/5a1ffd5b-edf3-43a0-9230-3e384f1bc699">
+<img width="1794" alt="Screenshot 2023-11-13 at 10 53 51 AM" src="https://github.com/abecko47/notes/assets/10388830/652037b3-c71a-4ea2-a0d9-f231c90859c0">
