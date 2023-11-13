@@ -63,6 +63,11 @@ export default function NoteEditor() {
   return (
     <RootLayout>
       <Grid alignItems={"center"} container xs={12}>
+          <Grid xs={12}>
+              <Button name={"home"} variant={"contained"} onClick={() => navigate("/home")}>
+                  {"<- Home"}
+              </Button>
+          </Grid>
         <Grid xs={3}>
           <h1>{currentNote.id !== "" ? <>Edit note</> : <>Add new note</>}</h1>
         </Grid>

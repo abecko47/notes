@@ -27,11 +27,11 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
       {notebooks.map((notebook) => (
         <Grid key={notebook.id} xs={12}>
           <NotebookBorderContainer container xs={12}>
-            <Grid xs={10}>
+            <Grid xs={3}>
               <MarginedHeader>Notebook "{notebook.name}"</MarginedHeader>
             </Grid>
-            <LastGridItem xs={2}>
-              <FullGridButton
+            <LastGridItem xs={9}>
+              <Button
                   name={"delete-notebook"}
                   variant={"contained"}
                   color={"error"}
@@ -46,7 +46,7 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
                   }}
               >
                 Remove
-              </FullGridButton>
+              </Button>
             </LastGridItem>
             <Grid xs={12}>
               <MarginedSmallHeader>Notes</MarginedSmallHeader>

@@ -63,7 +63,7 @@ export default function Home() {
                         navigate("/note");
                     }}
                 >
-                    Add note
+                    Add new note
                 </Button>
             </Grid>
             <LastGridItem xs={2}>
