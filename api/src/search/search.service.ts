@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { NotebooksService } from '../notebooks/notebooks.service';
-import { NotesService } from '../notes/notes.service';
 import { SearchQueryDto } from './dto/search-query.dto';
 import { UserDto } from '../users/dto/User.dto';
 import { queryToTsQueryWithAnd, queryToTsQueryWithOr } from './util/searchUtil';

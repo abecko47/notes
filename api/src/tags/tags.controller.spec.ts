@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TagsController } from './tags.controller';
 import { TagsService } from './tags.service';
-import {PrismaService} from "../prisma/prisma.service";
-import {NotebooksService} from "../notebooks/notebooks.service";
-import {NotesService} from "../notes/notes.service";
-import {PrismaModule} from "../prisma/prisma.module";
+import { PrismaService } from '../prisma/prisma.service';
+import { NotebooksService } from '../notebooks/notebooks.service';
+import { NotesService } from '../notes/notes.service';
+import { PrismaModule } from '../prisma/prisma.module';
 
 describe('TagsController', () => {
   let controller: TagsController;

@@ -13,7 +13,6 @@ import { UpdateNoteDto } from './dto/update-note.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersDecorator } from '../users/users.decorator';
 import { UserDto } from '../users/dto/User.dto';
-import { AssignNoteToNotebookDto } from './dto/assign-note-to-notebook.dto';
 
 @ApiTags('notes')
 @Controller('notes')

@@ -4,7 +4,6 @@ import { UpdateTagDto } from './dto/update-tag.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserDto } from '../users/dto/User.dto';
 import { throwIfUserIsNotOwner } from '../util/process.env';
-import { User } from '@prisma/client';
 import { EditTagToNotebookDto } from './dto/edit-tag-to-notebook.dto';
 import { NotebooksService } from '../notebooks/notebooks.service';
 import { NotesService } from '../notes/notes.service';

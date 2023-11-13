@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import {LocalStrategy} from "./local.strategy";
-import {JwtStrategy} from "./jwt.strategy";
-import {PrismaService} from "../prisma/prisma.service";
-import {UsersService} from "../users/users.service";
-import {UsersModule} from "../users/users.module";
-import {PassportModule} from "@nestjs/passport";
-import {JwtModule} from "@nestjs/jwt";
-import {jwtConstants} from "../util/process.env";
+import { LocalStrategy } from './local.strategy';
+import { JwtStrategy } from './jwt.strategy';
+import { PrismaService } from '../prisma/prisma.service';
+import { UsersService } from '../users/users.service';
+import { UsersModule } from '../users/users.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from '../util/process.env';
 
 describe('AuthService', () => {
   let service: AuthService;
