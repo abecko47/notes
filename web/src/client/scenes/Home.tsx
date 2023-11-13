@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NotesHomepageList from "./NotesHomepageList";
 import NotebooksHomepageList from "./NotebooksHomepageList";
-import { CircularProgress, TextField } from "@mui/material";
+import {Button, CircularProgress, TextField} from "@mui/material";
 import { useSearch } from "../../ctx/search/context";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { Simulate } from "react-dom/test-utils";
@@ -9,10 +9,12 @@ import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
+import {useNavigate} from "react-router-dom";
 
 export default function Home() {
   const search = useSearch();
   const { register } = useTagsObserver();
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResultDto>({
@@ -54,6 +56,10 @@ export default function Home() {
           setQuery(e.target.value);
         }}
       />
+
+      <Button onClick={() => {
+        navigate("/note");
+      }}>New note</Button>
 
       {query === "" && (
         <>

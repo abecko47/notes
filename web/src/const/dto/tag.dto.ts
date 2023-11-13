@@ -3,3 +3,5 @@ export type TagDto = {
 };
 
 export type TagAffinity = "note" | "notebook";
+
+export type TagAction = "assign" | "remove";
