@@ -22,7 +22,7 @@ export default function NotesList({ notes }: NotesListArgs) {
       {notes.map((note) => (
         <NoteBorderContainer spacing={1} key={note.id} container xs={3} alignItems={"center"} alignContent={"flex-start"}>
           <Grid xs={6}>
-            <MarginedHeader>{note.name}</MarginedHeader>
+            <MarginedHeader>"{note.name}"</MarginedHeader>
           </Grid>
           <MarginedContainer xs={12}>
             <SmallText>{`${note.content?.substring(0, 20)}${note.content?.length !== undefined && note.content?.length > 20 ? "..." : ""}`}</SmallText>

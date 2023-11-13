@@ -25,7 +25,7 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
   return (
     <>
       {notebooks.map((notebook) => (
-        <Grid xs={12}>
+        <Grid key={notebook.id} xs={12}>
           <NotebookBorderContainer container xs={12}>
             <Grid xs={10}>
               <MarginedHeader>Notebook "{notebook.name}"</MarginedHeader>

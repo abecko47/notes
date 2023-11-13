@@ -10,11 +10,12 @@ import {DeleteTagButton, LastGridItem, MarginedContainer, MarginedSmallHeader, S
 
 export type TagsListArgs = {
   tags: TagDto[];
+  tagAffinity: TagAffinity;
   noteId?: string;
   notebookId?: string;
 };
 
-export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
+export default function TagList({ tags, noteId, notebookId, tagAffinity }: TagsListArgs) {
   const { notify } = useTagsObserver();
   const { editNoteAndTag, editNotebookAndTag } = useApi();
 
@@ -65,14 +66,14 @@ export default function TagList({ tags, noteId, notebookId }: TagsListArgs) {
     <Grid spacing={1} container xs={12}>
       {
         tags.length > 0 && (<Grid xs={12}>
-            <SmallText>Tags</SmallText>
+            <SmallText>{`This ${tagAffinity} tags`}</SmallText>
           </Grid>)
       }
 
       <MarginedContainer container xs={12}>
         {tags.map((tag) => {
           return (
-            <Grid container xs={12} alignItems={"center"}>
+            <Grid key={tag.name} container xs={12} alignItems={"center"}>
                 <Grid xs={6}>
                   <SmallText>#{tag.name}</SmallText>
                 </Grid>

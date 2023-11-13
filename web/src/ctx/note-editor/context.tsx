@@ -7,6 +7,7 @@ import { UpsertNoteDto } from "../../const/dto/UpsertNote.dto";
 export type Context = {
   getNote: () => Promise<NoteDto>;
   noteId: string | undefined;
+  setCurrentNoteId: (noteId: string) => void;
   upsertNote: (upsertNoteDto: UpsertNoteDto) => Promise<NoteDto | null>;
 };
 
@@ -44,6 +45,7 @@ export const NoteEditorContextProvider = ({ children }: React.PropsWithChildren<
     getNote,
     noteId: currentNoteId,
     upsertNote,
+    setCurrentNoteId: (noteId: string) => setCurrentNoteId(noteId),
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;

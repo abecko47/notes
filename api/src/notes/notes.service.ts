@@ -109,7 +109,7 @@ export class NotesService {
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
-    const note = await this.getNoteSafe(id, user);
+    await this.getNoteSafe(id, user);
     // Check if user is owner of notebook
     if (
       updateNoteDto.notebookId !== null &&

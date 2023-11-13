@@ -20,13 +20,14 @@ export default function TagManager({
   notebookId,
 }: TagManagerArgs) {
   if (tagAffinity === "note" && notesAndTags !== undefined) {
-    return <TagList noteId={noteId} tags={notesAndTags.map((noteAndTag) => noteAndTag.tag)} />;
+    return <TagList tagAffinity={"note"} noteId={noteId} tags={notesAndTags.map((noteAndTag) => noteAndTag.tag)} />;
   }
 
   if (tagAffinity === "notebook" && notebooksAndTags !== undefined) {
     return (
       <TagList
         notebookId={notebookId}
+        tagAffinity={"notebook"}
         tags={notebooksAndTags.map((notebookAndTag) => notebookAndTag.tag)}
       />
     );

@@ -10,6 +10,11 @@ export const LastGridItem = styled(Grid)`
   width: auto;
 `;
 
+export const AssignNotebookContainer = styled(Grid)`
+  margin-left: 10px;
+  width: auto;
+`;
+
 export const FullWidthTextField = styled(TextField)`
   width: 100%;
 `;

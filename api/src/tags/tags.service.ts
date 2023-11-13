@@ -80,7 +80,6 @@ export class TagsService {
     });
   }
 
-  // TODO: remove this
   async update(id: string, updateTagDto: UpdateTagDto, user: UserDto) {
     const tag = await this.getTagSafe(id, user);
 
@@ -90,7 +89,6 @@ export class TagsService {
     });
   }
 
-  // TODO: delete also tags at notes and notebooks
   async remove(id: string, user: UserDto) {
     const tag = await this.getTagSafe(id, user);
 
