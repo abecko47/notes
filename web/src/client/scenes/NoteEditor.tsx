@@ -14,7 +14,7 @@ import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import TagManager from "../components/TagManager";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import RootLayout from "../components/RootLayout";
-import {AssignNotebookContainer, LastGridItem, SmallText} from "../components/StyledComponents";
+import {AssignNotebookContainer, LastGridItem, MarginedHeader, SmallText} from "../components/StyledComponents";
 
 export default function NoteEditor() {
   const { getNote, noteId, upsertNote, setCurrentNoteId } = useNoteEditor();
@@ -92,10 +92,10 @@ export default function NoteEditor() {
 
       </Grid>
 
-
+      <Grid container xs={12}>
       {currentNote.id !== "" && (
-        <Grid xs={12}>
-          <Grid alignItems={"center"} container xs={12}>
+        <Grid container xs={12}>
+          <Grid alignItems={"center"} container xs={10}>
             <Grid xs={3}>
               <span>Choose available notebook to assign this note</span>
             </Grid>
@@ -123,6 +123,9 @@ export default function NoteEditor() {
                     </Grid>
                 )
             }
+          <Grid xs={12}>
+            <Divider />
+          </Grid>
 
         </Grid>
       )}
@@ -132,7 +135,10 @@ export default function NoteEditor() {
               <SmallText>You will be able to assign note to notebook and assign tags to note after creating the new note.</SmallText>
         </Grid>
       )}
-
+      </Grid>
+      <Grid xs={12}>
+        <MarginedHeader>Note editor</MarginedHeader>
+      </Grid>
         <Grid xs={12}>
       <Formik
         initialValues={{ ...currentNote }}
