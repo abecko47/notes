@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { NoteAndTagDto, NoteDto } from "../../const/dto/Note.dto";
+import React from "react";
+import { NoteAndTagDto } from "../../const/dto/Note.dto";
 import { NotebookAndTagDto } from "../../const/dto/Notebook.dto";
 import { TagAffinity } from "../../const/dto/tag.dto";
 import TagList from "./TagList";

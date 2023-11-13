@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { NoteDto } from "../../const/dto/Note.dto";
+import React from "react";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { useApi } from "../../ctx/api/context";
 import { Button } from "@mui/material";
@@ -7,7 +6,6 @@ import NotesList from "./NotesList";
 import TagManager from "./TagManager";
 import { Divider, Grid } from "@mui/joy";
 import {
-  FullGridButton,
   LastGridItem,
   NotebookBorderContainer,
   MarginedHeader,

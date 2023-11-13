@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import { ACCESS_TOKEN } from "../../const/config";
-import { SearchResultDto } from "../../const/dto/SearchResult.dto";
-import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
-import { useApi } from "../api/context";
 
 export type Context = {
   notify: () => void;

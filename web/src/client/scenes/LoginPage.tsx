@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../ctx/auth/context";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import RootLayout from "../components/RootLayout";
 import { Grid } from "@mui/joy";
 
@@ -11,7 +10,6 @@ export default function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   if (auth.isSignedIn) {
     return <Navigate to={"/home"} />;

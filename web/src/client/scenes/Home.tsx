@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NotesHomepageList from "./NotesHomepageList";
 import NotebooksHomepageList from "./NotebooksHomepageList";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useSearch } from "../../ctx/search/context";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
-import { Simulate } from "react-dom/test-utils";
-import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
-import { useLocation, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../ctx/auth/context";
 import RootLayout from "../components/RootLayout";
 import { Grid } from "@mui/joy";

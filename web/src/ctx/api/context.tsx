@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../auth/context";
 import axios from "axios";
 import { API_URL } from "../../const/config";
-import { makeEmptyNote, NoteAndTagDto, NoteDto } from "../../const/dto/Note.dto";
+import { NoteAndTagDto, NoteDto } from "../../const/dto/Note.dto";
 import { NotebookAndTagDto, NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";

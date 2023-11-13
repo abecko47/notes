@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../ctx/api/context";
-import { NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import NotebooksList from "../components/NotebooksList";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { Grid } from "@mui/joy";
 import {

@@ -3,7 +3,6 @@ import { useApi } from "../../ctx/api/context";
 import { NoteDto } from "../../const/dto/Note.dto";
 import NotesList from "../components/NotesList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
-import { log } from "util";
 import { CircularProgress } from "@mui/material";
 import { Grid } from "@mui/joy";
 

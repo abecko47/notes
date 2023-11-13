@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { NoteAndTagDto } from "../../const/dto/Note.dto";
-import { NotebookAndTagDto } from "../../const/dto/Notebook.dto";
+import React, { useState } from "react";
 import { TagAction, TagAffinity, TagDto } from "../../const/dto/tag.dto";
 import { Button, TextField } from "@mui/material";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { useApi } from "../../ctx/api/context";
-import { Divider, Grid } from "@mui/joy";
-import {
-  DeleteTagButton,
-  LastGridItem,
-  MarginedContainer,
-  MarginedSmallHeader,
-  SmallText,
-} from "./StyledComponents";
+import { Grid } from "@mui/joy";
+import { DeleteTagButton, LastGridItem, MarginedContainer, SmallText } from "./StyledComponents";
 
 export type TagsListArgs = {
   tags: TagDto[];

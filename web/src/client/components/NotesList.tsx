@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NoteDto } from "../../const/dto/Note.dto";
 import { Link } from "react-router-dom";
 import TagManager from "./TagManager";
 import { Divider, Grid } from "@mui/joy";
 import {
-  NotebookBorderContainer,
   LastGridItem,
   MarginedHeader,
   NoteBorderContainer,

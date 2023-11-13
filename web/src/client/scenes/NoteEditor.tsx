@@ -3,14 +3,11 @@ import { makeEmptyNote, NoteDto } from "../../const/dto/Note.dto";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import { Divider, Grid, Textarea } from "@mui/joy";
 import { useNoteEditor } from "../../ctx/note-editor/context";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Formik } from "formik";
 import AssignNotebook from "../components/AssignNotebook";
-import {
-  makeEmptyNotebook,
-  makeEmptyNotebookForAssign,
-} from "../../const/dto/AddRemoveNotebook.dto";
+import { makeEmptyNotebook } from "../../const/dto/AddRemoveNotebook.dto";
 import { useApi } from "../../ctx/api/context";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TagManager from "../components/TagManager";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import RootLayout from "../components/RootLayout";

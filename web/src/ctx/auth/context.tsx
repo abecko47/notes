@@ -19,7 +19,7 @@ const context = React.createContext<Context | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const login = async (loginUserDto: LoginUserDto) => {
     try {
-      const { data, status } = await axios.post<LoginResultDto>(
+      const { data } = await axios.post<LoginResultDto>(
         `${API_URL}auth/login`,
         {
           ...loginUserDto,
@@ -41,7 +41,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknow
 
   const register = async (loginUserDto: LoginUserDto) => {
     try {
-      const { data, status } = await axios.post<LoginResultDto>(
+      const { data } = await axios.post<LoginResultDto>(
         `${API_URL}auth/register`,
         {
           ...loginUserDto,
