@@ -49,6 +49,9 @@ Migrate and populate database
 ```
   npx prisma migrate dev
 ```
+```
+  npx prisma db seed
+```
 Run dev server
 ```
 npm run start:dev
