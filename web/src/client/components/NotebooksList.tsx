@@ -32,7 +32,11 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
           >
             Delete
           </Button>
-          <TagManager notebookId={notebook.id} tagAffinity={"notebook"} notebooksAndTags={notebook.notebooksAndTags} />
+          <TagManager
+            notebookId={notebook.id}
+            tagAffinity={"notebook"}
+            notebooksAndTags={notebook.notebooksAndTags}
+          />
           <h5>Notes</h5>
           <NotesList notes={notebook.notes} />
         </>

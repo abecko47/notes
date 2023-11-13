@@ -37,7 +37,7 @@ export class NotebooksService {
   }
 
   findAll(user: UserDto) {
-    return  this.prisma.notebook.findMany({
+    return this.prisma.notebook.findMany({
       where: {
         user,
       },
@@ -51,18 +51,18 @@ export class NotebooksService {
             content: true,
             createdAt: true,
             notebookId: true,
-          }
+          },
         },
         notebooksAndTags: {
           select: {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -82,18 +82,18 @@ export class NotebooksService {
             content: true,
             createdAt: true,
             notebookId: true,
-          }
+          },
         },
         notebooksAndTags: {
           select: {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -115,9 +115,9 @@ export class NotebooksService {
 
     await this.prisma.notebooksAndTags.deleteMany({
       where: {
-        notebook
-      }
-    })
+        notebook,
+      },
+    });
 
     return this.prisma.notebook.delete({
       where: notebook,

@@ -12,7 +12,7 @@ import {
 import { useApi } from "../../ctx/api/context";
 import { Navigate, useNavigate } from "react-router-dom";
 import TagManager from "../components/TagManager";
-import {useTagsObserver} from "../../ctx/tag-update/context";
+import { useTagsObserver } from "../../ctx/tag-update/context";
 
 export default function NoteEditor() {
   const { getNote, noteId, upsertNote } = useNoteEditor();
@@ -23,7 +23,7 @@ export default function NoteEditor() {
   const [currentNote, setCurrentNote] = useState<NoteDto>(makeEmptyNote());
   const [tagManagerNote, setTagManagerNote] = useState<NoteDto>(makeEmptyNote());
 
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const run = async () => {
@@ -38,16 +38,16 @@ export default function NoteEditor() {
   }, [getNote, noteId]);
 
   const updateTagManagerNote = async () => {
-      setIsLoading(true);
-      setTagManagerNote(await getNote());
-      setIsLoading(false);
-  }
+    setIsLoading(true);
+    setTagManagerNote(await getNote());
+    setIsLoading(false);
+  };
 
-    useEffect(() => {
-        register("noteEditor", () => {
-            updateTagManagerNote();
-        });
-    }, []);
+  useEffect(() => {
+    register("noteEditor", () => {
+      updateTagManagerNote();
+    });
+  }, []);
 
   if (isLoading) {
     return (
@@ -59,44 +59,45 @@ export default function NoteEditor() {
 
   return (
     <>
-      <h1>{
-          currentNote.id !== "" ? (<>Edit note</>) : (<>Add new note</>)
-      }</h1>
+      <h1>{currentNote.id !== "" ? <>Edit note</> : <>Add new note</>}</h1>
       {currentNote.id !== "" && (
-          <>
-        <AssignNotebook
-          noteId={currentNote.id}
-          defaultNotebook={currentNote.notebook ?? makeEmptyNotebook()}
-        />
-              <TagManager noteId={tagManagerNote.id} tagAffinity={"note"} notesAndTags={tagManagerNote.notesAndTags} />
-              <Button
-                  onClick={async () => {
-                      setIsLoading(true);
-                      const result = await removeNote(currentNote.id);
+        <>
+          <AssignNotebook
+            noteId={currentNote.id}
+            defaultNotebook={currentNote.notebook ?? makeEmptyNotebook()}
+          />
+          <TagManager
+            noteId={tagManagerNote.id}
+            tagAffinity={"note"}
+            notesAndTags={tagManagerNote.notesAndTags}
+          />
+          <Button
+            onClick={async () => {
+              setIsLoading(true);
+              const result = await removeNote(currentNote.id);
 
-                      if (!result) {
-                          alert("Some error happened");
-                          setIsLoading(false);
-                          return null;
-                      }
+              if (!result) {
+                alert("Some error happened");
+                setIsLoading(false);
+                return null;
+              }
 
-                      alert("Successfully deleted.");
-                      setIsLoading(false);
-                      navigate("/home");
-                  }}
-              >
-                  Delete note
-              </Button>
-          </>
+              alert("Successfully deleted.");
+              setIsLoading(false);
+              navigate("/home");
+            }}
+          >
+            Delete note
+          </Button>
+        </>
       )}
 
-        {
-            currentNote.id === "" && (
-                <>
-                    you will be able to assign note to notebook and assign tags to note after creating the new note.
-                </>
-            )
-        }
+      {currentNote.id === "" && (
+        <>
+          you will be able to assign note to notebook and assign tags to note after creating the new
+          note.
+        </>
+      )}
 
       <Formik
         initialValues={{ ...currentNote }}

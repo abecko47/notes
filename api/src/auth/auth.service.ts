@@ -1,8 +1,8 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
-import {PrismaService} from "../prisma/prisma.service";
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
@@ -35,11 +35,13 @@ export class AuthService {
     };
   }
 
-  async register(user: Pick<User, 'username' | 'password'>): Promise<{ accessToken: string }> {
+  async register(
+    user: Pick<User, 'username' | 'password'>,
+  ): Promise<{ accessToken: string }> {
     const findDuplicateUsername = await this.prismaService.user.findMany({
       where: {
-        username: user.username
-      }
+        username: user.username,
+      },
     });
 
     if (findDuplicateUsername.length > 0) {
@@ -47,8 +49,8 @@ export class AuthService {
     }
 
     const newUser = await this.prismaService.user.create({
-      data: user
-    })
+      data: user,
+    });
 
     return {
       accessToken: this.jwtService.sign(newUser),

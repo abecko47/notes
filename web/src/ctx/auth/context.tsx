@@ -19,13 +19,17 @@ const context = React.createContext<Context | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknown>) => {
   const login = async (loginUserDto: LoginUserDto) => {
     try {
-      const { data, status } = await axios.post<LoginResultDto>(`${API_URL}auth/login`, {
-        ...loginUserDto,
-      }, {
-        headers: {
-          Accept: "application/json",
+      const { data, status } = await axios.post<LoginResultDto>(
+        `${API_URL}auth/login`,
+        {
+          ...loginUserDto,
         },
-      });
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
 
       window.localStorage.setItem(ACCESS_TOKEN, data.accessToken);
 
@@ -37,13 +41,17 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren<unknow
 
   const register = async (loginUserDto: LoginUserDto) => {
     try {
-      const { data, status } = await axios.post<LoginResultDto>(`${API_URL}auth/register`, {
-        ...loginUserDto,
-      }, {
-        headers: {
-          Accept: "application/json",
+      const { data, status } = await axios.post<LoginResultDto>(
+        `${API_URL}auth/register`,
+        {
+          ...loginUserDto,
         },
-      });
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
 
       window.localStorage.setItem(ACCESS_TOKEN, data.accessToken);
 

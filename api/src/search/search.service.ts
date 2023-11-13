@@ -36,11 +36,11 @@ export class SearchService {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -62,16 +62,13 @@ export class SearchService {
             content: true,
             createdAt: true,
             notebookId: true,
-          }
+          },
         },
-      }
+      },
     });
   }
 
-  async search(
-    searchQueryDto: SearchQueryDto,
-    userDto: UserDto,
-  ) {
+  async search(searchQueryDto: SearchQueryDto, userDto: UserDto) {
     const fullHitQuery = queryToTsQueryWithAnd(searchQueryDto.query);
     const partialHitQuery = queryToTsQueryWithOr(searchQueryDto.query);
 

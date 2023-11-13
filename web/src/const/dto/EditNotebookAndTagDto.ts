@@ -1,4 +1,4 @@
-import {TagAction} from "./tag.dto";
+import { TagAction } from "./tag.dto";
 
 export type EditNotebookAndTagDto = {
   tagName: string;

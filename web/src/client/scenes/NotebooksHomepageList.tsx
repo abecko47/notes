@@ -3,8 +3,8 @@ import { useApi } from "../../ctx/api/context";
 import { NoteDto } from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import NotebooksList from "../components/NotebooksList";
-import {Button, CircularProgress, TextField} from "@mui/material";
-import {useTagsObserver} from "../../ctx/tag-update/context";
+import { Button, CircularProgress, TextField } from "@mui/material";
+import { useTagsObserver } from "../../ctx/tag-update/context";
 
 export default function NotebooksHomepageList() {
   const api = useApi();
@@ -23,12 +23,12 @@ export default function NotebooksHomepageList() {
     refreshNotebooks();
 
     register("notebooksHomepage", () => {
-          refreshNotebooks();
-    })
+      refreshNotebooks();
+    });
   }, []);
 
   if (isLoading) {
-      return <CircularProgress />
+    return <CircularProgress />;
   }
 
   return (

@@ -24,7 +24,7 @@ export const TagContextProvider = ({ children }: React.PropsWithChildren<unknown
           listener();
         }
       });
-    }
+    },
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;

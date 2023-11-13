@@ -26,7 +26,7 @@ export class AppController {
   @Public()
   @Post('auth/register')
   async register(
-      @Body() loginUserDto: LoginUserDto,
+    @Body() loginUserDto: LoginUserDto,
   ): Promise<{ accessToken: string }> {
     return this.authService.register(loginUserDto);
   }

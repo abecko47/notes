@@ -54,11 +54,11 @@ export class NotesService {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -77,11 +77,11 @@ export class NotesService {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -100,22 +100,22 @@ export class NotesService {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto, user: UserDto) {
     const note = await this.getNoteSafe(id, user);
     // Check if user is owner of notebook
-    if (updateNoteDto.notebookId !== null && updateNoteDto.notebookId !== undefined) {
-      await this.notebooks.getNotebookSafe(
-          updateNoteDto.notebookId,
-          user,
-      );
+    if (
+      updateNoteDto.notebookId !== null &&
+      updateNoteDto.notebookId !== undefined
+    ) {
+      await this.notebooks.getNotebookSafe(updateNoteDto.notebookId, user);
     }
 
     return this.prisma.note.update({
@@ -137,11 +137,11 @@ export class NotesService {
             tag: {
               select: {
                 name: true,
-              }
-            }
-          }
-        }
-      }
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -150,9 +150,9 @@ export class NotesService {
 
     await this.prisma.notesAndTags.deleteMany({
       where: {
-        note
-      }
-    })
+        note,
+      },
+    });
 
     return this.prisma.note.delete({
       where: {
