@@ -12,8 +12,8 @@ import { useTagsObserver } from "../../ctx/tag-update/context";
 import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { useAuth } from "../../ctx/auth/context";
 import RootLayout from "../components/RootLayout";
-import {Grid} from "@mui/joy";
-import {LastGridItem, FullWidthTextField} from "../components/StyledComponents";
+import { Grid } from "@mui/joy";
+import { LastGridItem, FullWidthTextField } from "../components/StyledComponents";
 
 export default function Home() {
   const search = useSearch();
@@ -52,44 +52,43 @@ export default function Home() {
 
   return (
     <RootLayout>
-        <Grid container alignItems={"center"} xs={12}>
-            <Grid xs={2}>
-                <h1>Note App</h1>
-            </Grid>
-            <Grid xs={8}>
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        navigate("/note");
-                    }}
-                >
-                    Add new note
-                </Button>
-            </Grid>
-            <LastGridItem xs={2}>
-                <Button onClick={() => auth.signOut()}>Sign out</Button>
-            </LastGridItem>
+      <Grid container alignItems={"center"} xs={12}>
+        <Grid xs={2}>
+          <h1>Note App</h1>
         </Grid>
-        <Grid padding={0} xs={12}>
-            <FullWidthTextField
-                id="search"
-                label="Search"
-                variant="outlined"
-                onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
-                    setQuery(e.target.value);
-                }}
-            />
+        <Grid xs={8}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/note");
+            }}
+          >
+            Add new note
+          </Button>
         </Grid>
+        <LastGridItem xs={2}>
+          <Button onClick={() => auth.signOut()}>Sign out</Button>
+        </LastGridItem>
+      </Grid>
+      <Grid padding={0} xs={12}>
+        <FullWidthTextField
+          id="search"
+          label="Search"
+          variant="outlined"
+          onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+            setQuery(e.target.value);
+          }}
+        />
+      </Grid>
 
       {query === "" && (
         <>
-            <Grid container xs={12}>
-                <NotebooksHomepageList />
-            </Grid>
-            <Grid container xs={12}>
-                <NotesHomepageList />
-            </Grid>
-
+          <Grid container xs={12}>
+            <NotebooksHomepageList />
+          </Grid>
+          <Grid container xs={12}>
+            <NotesHomepageList />
+          </Grid>
         </>
       )}
 

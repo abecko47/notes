@@ -5,7 +5,7 @@ import NotesList from "../components/NotesList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
 import { log } from "util";
 import { CircularProgress } from "@mui/material";
-import {Grid} from "@mui/joy";
+import { Grid } from "@mui/joy";
 
 export default function NotesHomepageList() {
   const api = useApi();

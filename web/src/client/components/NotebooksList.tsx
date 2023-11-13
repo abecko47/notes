@@ -5,13 +5,14 @@ import { useApi } from "../../ctx/api/context";
 import { Button } from "@mui/material";
 import NotesList from "./NotesList";
 import TagManager from "./TagManager";
-import {Divider, Grid} from "@mui/joy";
+import { Divider, Grid } from "@mui/joy";
 import {
   FullGridButton,
   LastGridItem,
   NotebookBorderContainer,
   MarginedHeader,
-  MarginedSmallHeader, MarginedContainer
+  MarginedSmallHeader,
+  MarginedContainer,
 } from "./StyledComponents";
 
 export type NotebooksListArgs = {
@@ -32,18 +33,20 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
             </Grid>
             <LastGridItem xs={9}>
               <Button
-                  name={"delete-notebook"}
-                  variant={"contained"}
-                  color={"error"}
-                  onClick={async () => {
-                    const result = await removeNotebook(notebook);
-                    if (result) {
-                      onDelete();
-                      return;
-                    }
+                name={"delete-notebook"}
+                variant={"contained"}
+                color={"error"}
+                onClick={async () => {
+                  const result = await removeNotebook(notebook);
+                  if (result) {
+                    onDelete();
+                    return;
+                  }
 
-                    alert("Something wrong happened. If the notebook contains notes, first delete them.");
-                  }}
+                  alert(
+                    "Something wrong happened. If the notebook contains notes, first delete them.",
+                  );
+                }}
               >
                 Remove
               </Button>
@@ -59,13 +62,12 @@ export default function NotebooksList({ notebooks, onDelete }: NotebooksListArgs
             </Grid>
             <MarginedContainer xs={3}>
               <TagManager
-                  notebookId={notebook.id}
-                  tagAffinity={"notebook"}
-                  notebooksAndTags={notebook.notebooksAndTags}
+                notebookId={notebook.id}
+                tagAffinity={"notebook"}
+                notebooksAndTags={notebook.notebooksAndTags}
               />
             </MarginedContainer>
           </NotebookBorderContainer>
-
         </Grid>
       ))}
     </>
