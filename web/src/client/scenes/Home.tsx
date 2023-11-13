@@ -52,7 +52,7 @@ export default function Home() {
     <RootLayout>
       <Grid container alignItems={"center"} xs={12}>
         <Grid xs={2}>
-          <h1>Note App</h1>
+          <h1>Notes App</h1>
         </Grid>
         <Grid xs={8}>
           <Button

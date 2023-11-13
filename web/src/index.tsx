@@ -12,6 +12,7 @@ import { SearchContextProvider } from "./ctx/search/context";
 import NoteEditor from "./client/scenes/NoteEditor";
 import { NoteEditorContextProvider } from "./ctx/note-editor/context";
 import { TagContextProvider } from "./ctx/tag-update/context";
+import { Helmet } from "react-helmet";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,9 @@ root.render(
   <AuthContextProvider>
     <ApiContextProvider>
       <TagContextProvider>
+        <Helmet>
+          <title>Notes</title>
+        </Helmet>
         <RouterProvider router={router} />
       </TagContextProvider>
     </ApiContextProvider>
