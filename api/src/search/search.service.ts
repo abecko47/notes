@@ -27,6 +27,20 @@ export class SearchService {
         ],
         user: userDto,
       },
+      select: {
+        id: true,
+        name: true,
+        content: true,
+        notesAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
+      }
     });
   }
 

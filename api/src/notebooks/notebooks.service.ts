@@ -53,23 +53,48 @@ export class NotebooksService {
             notebookId: true,
           }
         },
+        notebooksAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
       }
     });
   }
 
   async findOne(id: string, user: UserDto) {
-    const notebook =  this.prisma.notebook.findFirst({
+    return this.prisma.notebook.findFirst({
       where: {
         id,
         user,
       },
+      select: {
+        name: true,
+        id: true,
+        notes: {
+          select: {
+            id: true,
+            name: true,
+            content: true,
+            createdAt: true,
+            notebookId: true,
+          }
+        },
+        notebooksAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
+      }
     });
-
-    return {
-      ...(await notebook),
-      notes: await notebook.notes(),
-      tags: await notebook.notebooksAndTags(),
-    }
   }
 
   async update(

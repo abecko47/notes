@@ -8,9 +8,11 @@ import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
+import {useTagsObserver} from "../../ctx/tag-update/context";
 
 export default function Home() {
   const search = useSearch();
+  const { register } = useTagsObserver();
   const [query, setQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResultDto>({
@@ -32,7 +34,17 @@ export default function Home() {
     if (query !== "") {
       handleSearch();
     }
+
+    register("search", () => {
+      if (query !== "") {
+        handleSearch();
+      }
+    });
   }, [query]);
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <>

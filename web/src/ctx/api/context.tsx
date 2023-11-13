@@ -2,12 +2,13 @@ import React from "react";
 import { useAuth } from "../auth/context";
 import axios from "axios";
 import { API_URL } from "../../const/config";
-import { makeEmptyNote, NoteDto } from "../../const/dto/Note.dto";
+import {makeEmptyNote, NoteAndTagDto, NoteDto} from "../../const/dto/Note.dto";
 import { NotebookDto } from "../../const/dto/Notebook.dto";
 import { SearchResultDto } from "../../const/dto/SearchResult.dto";
 import { SearchQueryDto } from "../../const/dto/SearchQuery.dto";
 import { UpsertNoteDto } from "../../const/dto/UpsertNote.dto";
 import { AddRemoveNotebookDto } from "../../const/dto/AddRemoveNotebook.dto";
+import {EditNoteAndTagDto} from "../../const/dto/EditNoteAndTagDto";
 
 export type Context = {
   getNotes: () => Promise<NoteDto[]>;
@@ -18,6 +19,7 @@ export type Context = {
   addNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
   removeNotebook: (addRemoveNotebookDto: AddRemoveNotebookDto) => Promise<NotebookDto | null>;
   removeNote: (noteId: string) => Promise<NoteDto | null>;
+  editNoteAndTag: (editNoteAndTagDto: EditNoteAndTagDto) => Promise<NoteAndTagDto | null>;
 };
 
 const context = React.createContext<Context | null>(null);
@@ -185,6 +187,31 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     return result.data;
   };
 
+  const editNoteAndTag = async (
+      editNoteAndTagDto: EditNoteAndTagDto,
+  ): Promise<NoteAndTagDto | null> => {
+    const result = await axios.post(
+        `${API_URL}tags/edit/note/${editNoteAndTagDto.tagName}`,
+        {
+          ...editNoteAndTagDto,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: authorization,
+          },
+          validateStatus: () => true,
+        },
+    );
+
+    if (result.status === 401) {
+      signOut();
+      return null;
+    }
+
+    return result.data;
+  };
+
   const removeNotebook = async (
     addRemoveNotebookDto: AddRemoveNotebookDto,
   ): Promise<NotebookDto | null> => {
@@ -247,6 +274,7 @@ export const ApiContextProvider = ({ children }: React.PropsWithChildren<unknown
     addNotebook,
     removeNotebook,
     removeNote,
+    editNoteAndTag,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;
