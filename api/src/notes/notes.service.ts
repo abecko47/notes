@@ -45,6 +45,20 @@ export class NotesService {
         notebookId: createNoteDto.notebookId,
         content: createNoteDto.content,
       },
+      select: {
+        id: true,
+        name: true,
+        content: true,
+        notesAndTags: {
+          select: {
+            tag: {
+              select: {
+                name: true,
+              }
+            }
+          }
+        }
+      }
     });
   }
 
@@ -119,7 +133,13 @@ export class NotesService {
   }
 
   async remove(id: string, user: UserDto) {
-    await this.getNoteSafe(id, user);
+    const note = await this.getNoteSafe(id, user);
+
+    await this.prisma.notesAndTags.deleteMany({
+      where: {
+        note
+      }
+    })
 
     return this.prisma.note.delete({
       where: {

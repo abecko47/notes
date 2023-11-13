@@ -9,18 +9,22 @@ import load = Simulate.load;
 import NotesList from "../components/NotesList";
 import NotebooksList from "../components/NotebooksList";
 import { useTagsObserver } from "../../ctx/tag-update/context";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useNavigation} from "react-router-dom";
 
 export default function Home() {
   const search = useSearch();
   const { register } = useTagsObserver();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [query, setQuery] = useState("");
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResultDto>({
     notes: [],
     notebooks: [],
   });
+
+  console.log({l: location.key})
 
   const handleSearch = async () => {
     setLoadingSearch(true);
@@ -42,9 +46,7 @@ export default function Home() {
         handleSearch();
       }
     });
-  }, [query]);
-
-  useEffect(() => {}, []);
+  }, [query, location.pathname]);
 
   return (
     <>

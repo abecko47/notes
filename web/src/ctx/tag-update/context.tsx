@@ -16,9 +16,7 @@ export const TagContextProvider = ({ children }: React.PropsWithChildren<unknown
   const [listeners, setListeners] = useState<Map<string, { (): void } | undefined>>(new Map());
   const value: Context = {
     register: (name: string, listener: () => void) => {
-      if (listeners?.get(name) === undefined) {
-        setListeners(new Map(listeners.set(name, listener)));
-      }
+      setListeners(new Map(listeners.set(name, listener)));
     },
     notify: () => {
       listeners.forEach((listener) => {
